@@ -1,13 +1,12 @@
 package org.example.spring.supermarket.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
-@GetMapping
-    public String hello(){
-    return "login.html";
-}
+public class LoginController {
+    @GetMapping
+    public  String login(){
+        return "/login.html";
+    }
 }
