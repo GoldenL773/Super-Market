@@ -26,7 +26,7 @@ ALTER DATABASE [SuperMarket] SET ANSI_WARNINGS OFF
 GO
 ALTER DATABASE [SuperMarket] SET ARITHABORT OFF 
 GO
-ALTER DATABASE [SuperMarket] SET AUTO_CLOSE ON 
+ALTER DATABASE [SuperMarket] SET AUTO_CLOSE OFF 
 GO
 ALTER DATABASE [SuperMarket] SET AUTO_SHRINK OFF 
 GO
@@ -60,7 +60,7 @@ ALTER DATABASE [SuperMarket] SET READ_COMMITTED_SNAPSHOT OFF
 GO
 ALTER DATABASE [SuperMarket] SET HONOR_BROKER_PRIORITY OFF 
 GO
-ALTER DATABASE [SuperMarket] SET RECOVERY SIMPLE 
+ALTER DATABASE [SuperMarket] SET RECOVERY full 
 GO
 ALTER DATABASE [SuperMarket] SET  MULTI_USER 
 GO
@@ -108,6 +108,7 @@ CREATE TABLE [dbo].[Categories](
 	[category_id] [int] IDENTITY(1,1) NOT NULL,
 	[name] [nvarchar](100) NOT NULL,
 	[description] [nvarchar](max) NULL,
+	[image] [nvarchar](max) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[category_id] ASC
@@ -373,11 +374,11 @@ PRIMARY KEY CLUSTERED
 GO
 SET IDENTITY_INSERT [dbo].[Categories] ON 
 
-INSERT [dbo].[Categories] ([category_id], [name], [description]) VALUES (1, N'Thực phẩm', N'Danh mục bao gồm các loại thực phẩm tươi sống, đóng gói như rau củ, thịt, cá, gạo, mì, và đồ ăn sẵn.')
-INSERT [dbo].[Categories] ([category_id], [name], [description]) VALUES (2, N'Đồ uống', N'Các loại đồ uống như nước ngọt, bia, sữa, nước đóng chai, trà và cà phê.')
-INSERT [dbo].[Categories] ([category_id], [name], [description]) VALUES (3, N'Đồ gia dụng', N'Các sản phẩm dùng trong gia đình như chén dĩa, nồi chảo, dụng cụ vệ sinh, và đồ điện nhỏ.')
-INSERT [dbo].[Categories] ([category_id], [name], [description]) VALUES (4, N'Chăm sóc cá nhân', N'Sản phẩm chăm sóc cá nhân như xà phòng, dầu gội, kem đánh răng, và mỹ phẩm cơ bản.')
-INSERT [dbo].[Categories] ([category_id], [name], [description]) VALUES (5, N'Đồ chơi & Văn phòng phẩm', N'Đồ chơi cho trẻ em và các sản phẩm văn phòng như bút, giấy, sổ tay.')
+INSERT [dbo].[Categories] ([category_id], [name], [description],[image]) VALUES (1, N'Thực phẩm', N'Danh mục bao gồm các loại thực phẩm tươi sống, đóng gói như rau củ, thịt, cá, gạo, mì, và đồ ăn sẵn.',N'https://image.luatvietnam.vn/uploaded/twebp/images/original/2023/08/31/thuc-pham-la-gi_3108125835.jpeg')
+INSERT [dbo].[Categories] ([category_id], [name], [description],[image]) VALUES (2, N'Đồ uống', N'Các loại đồ uống như nước ngọt, bia, sữa, nước đóng chai, trà và cà phê.',N'https://uongnuoc.com/wp-content/uploads/2020/04/Untitled-design-3-2.jpg')
+INSERT [dbo].[Categories] ([category_id], [name], [description],[image]) VALUES (3, N'Đồ gia dụng', N'Các sản phẩm dùng trong gia đình như chén dĩa, nồi chảo, dụng cụ vệ sinh, và đồ điện nhỏ.',N'https://locknlockvietnam.com/wp-content/uploads/2023/10/kham-pha-bo-suu-tap-do-gia-dung-bianco-locknlock-2023-1.jpg')
+INSERT [dbo].[Categories] ([category_id], [name], [description],[image]) VALUES (4, N'Chăm sóc cá nhân', N'Sản phẩm chăm sóc cá nhân như xà phòng, dầu gội, kem đánh răng, và mỹ phẩm cơ bản.',N'https://fidobox.vn/wp-content/uploads/2024/07/Lam-the-nao-de-tham-gia-chuong-trinh-San-Deal-Headwolf3.png')
+INSERT [dbo].[Categories] ([category_id], [name], [description],[image]) VALUES (5, N'Đồ chơi & Văn phòng phẩm', N'Đồ chơi cho trẻ em và các sản phẩm văn phòng như bút, giấy, sổ tay.',N'https://down-vn.img.susercontent.com/file/sg-11134201-7rffh-m4a1menvka4h9c')
 SET IDENTITY_INSERT [dbo].[Categories] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Customer] ON 
@@ -603,10 +604,10 @@ REFERENCES [dbo].[Staffs] ([staff_id])
 GO
 ALTER TABLE [dbo].[Orders] CHECK CONSTRAINT [FK__Orders__staff_id__5EBF139D]
 GO
-ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK__Payments__order___6754599E] FOREIGN KEY([order_id])
-REFERENCES [dbo].[Orders] ([order_id])
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD CONSTRAINT [FK_Invoice_order] FOREIGN KEY([order_id])
+REFERENCES [dbo].[Orders] ([order_id]);
 GO
-ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK__Payments__order___6754599E]
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_order]
 GO
 ALTER TABLE [dbo].[Products]  WITH CHECK ADD FOREIGN KEY([category_id])
 REFERENCES [dbo].[Categories] ([category_id])
@@ -657,3 +658,4 @@ USE [master]
 GO
 ALTER DATABASE [SuperMarket] SET  READ_WRITE 
 GO
+
