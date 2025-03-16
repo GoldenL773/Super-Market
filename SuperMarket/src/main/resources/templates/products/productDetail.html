@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sản phẩm</title>
+    <style>
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        h2 {
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+        .info {
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Chi tiết sản phẩm</h2>
+    <p><strong>Tên sản phẩm:</strong> <span th:text="${product.name}"></span></p>
+    <p><strong>Giá:</strong> <span th:text="${product.price}"></span> VND</p>
+    <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
+    <p><strong>Danh mục:</strong> <span th:text="${product.category.name}"></span></p>
+    <p><strong>Số lượng tồn kho:</strong> <span th:text="${productQuantity}"></span></p>
+<!--    <p><strong>Giá nhập:</strong> <span th:text="${product.inventory.purchasePrice}"></span> VND</p>-->
+    <p><strong>Hình ảnh:</strong></p>
+    <img th:src="@{${product.image}}" alt="Hình ảnh sản phẩm">
+    <a href="/products" class="btn">Quay lại danh sách</a>
+</div>
+</body>
+</html>
