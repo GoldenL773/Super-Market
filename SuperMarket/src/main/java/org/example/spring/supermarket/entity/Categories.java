@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,5 +22,9 @@ public class Categories {
 
     @Column(name = "description", nullable = false,  columnDefinition = "nvarchar(max)")
     private String description;
+    @Column(name = "image", nullable = true, columnDefinition = "nvarchar(max)")
+    private String image;
 
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }
