@@ -11,8 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "StockEntry")
-public class StockEntry {
+@Table(name = "StockEntries")
+public class StockEntries {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stock_entry_id", nullable = false, columnDefinition = "int")
@@ -25,11 +25,6 @@ public class StockEntry {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id", nullable = false, columnDefinition = "int")
     private Inventory inventory;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id", nullable = true, columnDefinition = "int")
-    private Supplier supplier;
-
     @Column(name = "batch_number", nullable = true, length = 50, columnDefinition = "nvarchar(50)")
     private String batchNumber;
 
