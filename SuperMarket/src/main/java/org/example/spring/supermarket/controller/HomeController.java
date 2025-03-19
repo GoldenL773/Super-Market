@@ -10,4 +10,13 @@ public class HomeController {
     public String home() {
         return "/shop";
     }
+
+
+
+    @GetMapping("/nice-table")
+    public String table() {
+        return "/quixlab-master/widgets";
+    }
 }
+
+
