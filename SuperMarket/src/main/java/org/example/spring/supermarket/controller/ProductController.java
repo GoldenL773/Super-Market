@@ -29,6 +29,12 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
+
+    @GetMapping("")
+    public String listProduct() {
+        return "listProduct";
+    }
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -38,7 +44,7 @@ public class ProductController {
     @Autowired
     private InventoryRepository inventoryRepository;
 
-    @GetMapping
+    @GetMapping("/list")
     public String showAllProducts(Model model) {
         List<Product> products = productRepository.findAll();
         List<Categories> categories = categoriesRepository.findAll();
@@ -150,7 +156,7 @@ public class ProductController {
             System.out.println("⚠️ Cảnh báo: Giá nhập hoặc số lượng không hợp lệ.");
         }
 
-        return "redirect:/products";
+        return "redirect:/products/list";
     }
 
 
@@ -170,7 +176,7 @@ public class ProductController {
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return "redirect:/products";
+        return "redirect:/products/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -192,7 +198,7 @@ public class ProductController {
             model.addAttribute("productQuantity", quantity); // Thêm số lượng vào model
             return "products/productDetail";
         } else {
-            return "redirect:/products";
+            return "redirect:/products/list";
         }
     }
 
@@ -208,7 +214,7 @@ public class ProductController {
     public String editProductForm(@PathVariable("id") int id, Model model) {
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isEmpty()) {
-            return "redirect:/products";
+            return "redirect:/products/list";
         }
 
         Product product = productOpt.get();
@@ -315,7 +321,7 @@ public class ProductController {
             inventoryRepository.save(newInventory);
         }
 
-        return "redirect:/products";
+        return "redirect:/products/list";
     }
 
 
