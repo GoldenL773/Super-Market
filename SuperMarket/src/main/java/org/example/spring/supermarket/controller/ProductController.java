@@ -204,5 +204,120 @@ public class ProductController {
         ));
     }
 
+    @GetMapping("/edit/{id}")
+    public String editProductForm(@PathVariable("id") int id, Model model) {
+        Optional<Product> productOpt = productRepository.findById(id);
+        if (productOpt.isEmpty()) {
+            return "redirect:/products";
+        }
+
+        Product product = productOpt.get();
+
+        // Đổ dữ liệu từ Product sang DTO
+        productDTO dto = new productDTO();
+        dto.setName(product.getName());
+        dto.setDescription(product.getDescription());
+        dto.setPrice(product.getPrice());
+        dto.setCategoryId(product.getCategory().getId());
+
+        // Lấy số lượng từ bảng Inventory
+        Optional<Inventory> inventoryOpt = inventoryRepository.findByProductId(product.getId());
+        if (inventoryOpt.isPresent()) {
+            dto.setQuantity(inventoryOpt.get().getQuantity());
+        } else {
+            dto.setQuantity(0);  // Nếu không có, gán 0
+        }
+
+        model.addAttribute("productDTO", dto);
+        model.addAttribute("productId", id);  // để form dùng
+        model.addAttribute("categories", categoriesRepository.findAll());
+
+        return "products/editProduct";  // trả về form cập nhật
+    }
+
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable("id") int id,
+                                @Valid @ModelAttribute("productDTO") productDTO dto,
+                                BindingResult result,
+                                Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("categories", categoriesRepository.findAll());
+            return "products/editProduct";
+        }
+
+        Optional<Product> productOpt = productRepository.findById(id);
+        if (productOpt.isEmpty()) {
+            return "redirect:/products";
+        }
+
+        Product product = productOpt.get();
+
+        // Cập nhật thông tin từ DTO
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+
+        Categories category = categoriesRepository.findById(dto.getCategoryId()).orElse(null);
+        if (category == null) {
+            result.rejectValue("categoryId", "error.productDTO", "Danh mục không tồn tại!");
+            model.addAttribute("categories", categoriesRepository.findAll());
+            return "products/editProduct";
+        }
+        product.setCategory(category);
+
+        // Nếu có ảnh mới → cập nhật ảnh
+        MultipartFile newImage = dto.getImage();
+        if (newImage != null && !newImage.isEmpty()) {
+            try {
+                String uploadDir = "src/main/resources/static/images/";
+                File folder = new File(uploadDir);
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }
+
+                // Xóa ảnh cũ nếu có
+                String oldImagePath = product.getImage();
+                if (oldImagePath != null) {
+                    Path oldPath = Paths.get("src/main/resources/static", oldImagePath);
+                    Files.deleteIfExists(oldPath);
+                }
+
+                // Lưu ảnh mới
+                String newFileName = System.currentTimeMillis() + "_" + newImage.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, newFileName);
+                Files.copy(newImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                product.setImage("/images/" + newFileName);
+            } catch (IOException e) {
+                throw new RuntimeException("Lỗi khi cập nhật ảnh", e);
+            }
+        }
+
+        // Lưu lại Product
+        productRepository.save(product);
+
+        // Cập nhật Inventory - chỉ cập nhật số lượng
+        Optional<Inventory> inventoryOpt = inventoryRepository.findByProductId(product.getId());
+        if (inventoryOpt.isPresent()) {
+            Inventory inventory = inventoryOpt.get();
+            inventory.setQuantity(dto.getQuantity());
+            inventory.setLastUpdated(new Date());
+            inventoryRepository.save(inventory);
+        } else {
+            // Nếu chưa có Inventory → tạo mới
+            Inventory newInventory = new Inventory();
+            newInventory.setProduct(product);
+            newInventory.setQuantity(dto.getQuantity());
+            newInventory.setPurchaseDate(new Date());
+            newInventory.setLastUpdated(new Date());
+            newInventory.setPurchasePrice(dto.getPrice());  // vẫn lưu giá hiện tại là giá nhập
+            inventoryRepository.save(newInventory);
+        }
+
+        return "redirect:/products";
+    }
+
+
 
 }

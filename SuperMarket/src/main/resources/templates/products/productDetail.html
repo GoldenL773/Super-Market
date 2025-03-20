@@ -48,7 +48,6 @@
     <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
     <p><strong>Danh mục:</strong> <span th:text="${product.category.name}"></span></p>
     <p><strong>Số lượng tồn kho:</strong> <span th:text="${productQuantity}"></span></p>
-<!--    <p><strong>Giá nhập:</strong> <span th:text="${product.inventory.purchasePrice}"></span> VND</p>-->
     <p><strong>Hình ảnh:</strong></p>
     <img th:src="@{${product.image}}" alt="Hình ảnh sản phẩm">
     <a href="/products" class="btn">Quay lại danh sách</a>
