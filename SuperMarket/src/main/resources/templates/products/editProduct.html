@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Cập nhật sản phẩm</h2>
+    <form method="post" enctype="multipart/form-data"
+          th:action="@{/products/update/{id}(id=${productId})}"
+          th:object="${productDTO}">
+
+        <!-- Tên sản phẩm -->
+        <label for="name">Tên sản phẩm:</label>
+        <input type="text" id="name" th:field="*{name}" required />
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <!-- Giá -->
+        <label for="price">Giá:</label>
+        <input type="number" id="price" th:field="*{price}" step="0.01" required />
+        <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+
+        <!-- Mô tả sản phẩm -->
+        <label for="description">Mô tả:</label>
+        <textarea id="description" th:field="*{description}"></textarea>
+        <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+        <!-- Danh mục sản phẩm -->
+        <label for="categoryId">Danh mục:</label>
+        <select id="categoryId" th:field="*{categoryId}" required>
+            <option value="">-- Chọn danh mục --</option>
+            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select>
+        <span class="error" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></span>
+
+        <!-- Ảnh mới -->
+        <label for="image">Ảnh sản phẩm (chọn nếu muốn đổi):</label>
+        <input type="file" id="image" th:field="*{image}" accept="image/*">
+        <span class="error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+
+        <!-- Số lượng -->
+        <label for="quantity">Số lượng trong kho:</label>
+        <input type="number" id="quantity" th:field="*{quantity}" required />
+        <span class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>
+
+
+
+        <button type="submit" class="btn">Cập nhật sản phẩm</button>
+    </form>
+</div>
+</body>
+</html>

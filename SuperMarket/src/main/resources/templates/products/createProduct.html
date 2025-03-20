@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Thêm Sản Phẩm Mới</h2>
+    <form method="post" enctype="multipart/form-data" th:action="@{/products/create}" th:object="${productDTO}">
+
+        <!-- Tên sản phẩm -->
+        <label for="name">Tên sản phẩm:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" required />
+<!--        <span class="error" th:if="${#fields.hasErrors('productName')}" th:errors="*{name}"></span>-->
+
+        <!-- Giá -->
+        <label for="price">Giá:</label>
+        <input type="number" id="price" name="price" th:field="*{price}" step="0.01" required />
+<!--        <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>-->
+
+        <!-- Mô tả sản phẩm -->
+        <label for="description">Mô tả:</label>
+        <textarea id="description" name="description" th:field="*{description}"></textarea>
+<!--        <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
+
+        <!-- Danh mục sản phẩm -->
+        <label for="category">Danh mục:</label>
+        <select id="category" name="categoryId" th:field="*{categoryId}" required>
+            <option value="">-- Chọn danh mục --</option>
+            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select>
+<!--        <span class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{categoryId}"></span>-->
+
+        <!-- Ảnh sản phẩm -->
+        <label for="image">Ảnh sản phẩm:</label>
+        <input type="file" id="image" name="image" accept="image/*" th:field="*{image}" required>
+<!--        <span class="error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>-->
+
+        <!-- Số lượng trong kho -->
+        <label for="quantity">Số lượng trong kho:</label>
+        <input type="number" id="quantity" name="quantity" th:field="*{quantity}" required />
+<!--        <span class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>-->
+
+        <!-- Giá nhập hàng -->
+        <label for="purchasePrice">Giá nhập hàng:</label>
+        <input type="number" id="purchasePrice" name="purchasePrice" th:field="*{purchasePrice}" step="0.01" required />
+        <span class="error" th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
+
+        <!-- Ngày nhập hàng -->
+    <!--        <label for="purchaseDate">Ngày nhập hàng:</label>-->
+    <!--        <input type="date" id="purchaseDate" name="purchaseDate" th:field="*{purchaseDate}" required />-->
+    <!--        <span class="error" th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}"></span>-->
+
+        <button type="submit" class="btn">Lưu sản phẩm</button>
+    </form>
+</div>
+</body>
+</html>
