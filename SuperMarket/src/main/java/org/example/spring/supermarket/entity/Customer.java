@@ -48,4 +48,8 @@ public class Customer {
     @Column(name = "created_at", nullable = true, columnDefinition = "datetime")
     private Date createdAt;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
 }

@@ -27,63 +27,88 @@
                 <p class="lead">
                     Save time and leave the groceries to us.
                 </p>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-lg-6">
+                            <div class="card mt-5">
+                                <div class="card-header text-center">
+                                    <h3>Register Account</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div th:if="${registrationError}" class="alert alert-danger" role="alert">
+                                        <span th:text="${registrationError}"></span>
+                                    </div>
 
-                <div class="card card-login mb-5">
-                    <div class="card-body">
-                        <form class="form-horizontal" action="index.html">
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="text" required placeholder="Full Name">
+                                    <form th:action="@{/register}" th:object="${customer}" method="post">
+                                        <!-- Username -->
+                                        <div class="form-group">
+                                            <label for="username">Username</label>
+                                            <input type="text" th:field="*{username}" class="form-control" id="username" required>
+                                            <small class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                                            <small class="text-danger" th:if="${usernameError}" th:text="${usernameError}"></small>
+                                        </div>
+
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" th:field="*{email}" class="form-control" id="email" required>
+                                            <small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                                            <small class="text-danger" th:if="${emailError}" th:text="${emailError}"></small>
+                                        </div>
+
+                                        <!-- Password -->
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" th:field="*{password}" class="form-control" id="password" required>
+                                            <small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                                        </div>
+
+                                        <!-- Confirm Password -->
+                                        <div class="form-group">
+                                            <label for="confirmPassword">Confirm Password</label>
+                                            <input type="password" th:field="*{confirmPassword}" class="form-control" id="confirmPassword" required>
+                                            <small class="text-danger" th:if="${passwordError}" th:text="${passwordError}"></small>
+                                        </div>
+
+                                        <!-- Full Name -->
+                                        <div class="form-group">
+                                            <label for="fullName">Full Name</label>
+                                            <input type="text" th:field="*{fullName}" class="form-control" id="fullName">
+                                        </div>
+
+                                        <!-- Phone Number -->
+                                        <div class="form-group">
+                                            <label for="phoneNumber">Phone Number</label>
+                                            <input type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber">
+                                        </div>
+
+                                        <!-- Gender -->
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" th:field="*{gender}" name="gender" id="male" value="true">
+                                                <label class="form-check-label" for="male">Male</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" th:field="*{gender}" name="gender" id="female" value="false">
+                                                <label class="form-check-label" for="female">Female</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Address -->
+                                        <div class="form-group">
+                                            <label for="address">Address</label>
+                                            <textarea th:field="*{address}" class="form-control" id="address" rows="2"></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                                    </form>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <div>Already have an account? <a th:href="@{/login}">Login</a></div>
                                 </div>
                             </div>
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="text" required placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="phone" required placeholder="Phone">
-                                </div>
-                            </div>
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="email" required placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="password" required placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="number" required placeholder="Age">
-                                </div>
-                            </div>
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="date" required placeholder="Date of Birth">
-                                </div>
-                            </div>
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="text" required placeholder="Address">
-                                </div>
-                            </div>
-                            <div class="form-group row text-center mt-4">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-block text-uppercase">Register</button>
-                                </div>
-                            </div>
-                            <div class="form-group row text-center mt-3">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-danger btn-block text-uppercase">
-                                        <i class="fa fa-google"></i> Register with Google
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

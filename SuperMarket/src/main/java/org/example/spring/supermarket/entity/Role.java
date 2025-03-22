@@ -23,11 +23,4 @@ public class Role {
     @Column(name = "role_name", nullable = false, length = 255, columnDefinition = "nvarchar(255)")
     private String roleName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "Role_Permissions",
-            joinColumns = @JoinColumn(name = "role_id", columnDefinition = "int"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id", columnDefinition = "int")
-    )
-    private Set<Permission> permissions = new HashSet<>();
 }
