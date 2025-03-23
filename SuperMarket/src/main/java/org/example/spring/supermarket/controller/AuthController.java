@@ -1,6 +1,7 @@
 package org.example.spring.supermarket.controller;
 
 import jakarta.validation.Valid;
+
 import org.example.spring.supermarket.DTO.UserRegistrationDto;
 import org.example.spring.supermarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

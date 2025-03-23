@@ -62,8 +62,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer updateCustomer(Customer customer) {
         // Check if we need to encode the password (if it was changed)
-        if (customer.getId() != 0) {
-            Optional<Customer> existingCustomer = customerRepository.findById(customer.getId());
+        if (customer.getCustomerId() != 0) {
+            Optional<Customer> existingCustomer = customerRepository.findById(customer.getCustomerId());
             if (existingCustomer.isPresent() && !existingCustomer.get().getPassword().equals(customer.getPassword())) {
                 customer.setPassword(customer.getPassword());
             }

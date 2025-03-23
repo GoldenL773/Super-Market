@@ -1,7 +1,7 @@
 package org.example.spring.supermarket.service;
 
 
-import org.example.spring.supermarket.dto.UserRegistrationDto;
+import org.example.spring.supermarket.DTO.UserRegistrationDto;
 import org.example.spring.supermarket.entity.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

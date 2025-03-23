@@ -1,7 +1,7 @@
 package org.example.spring.supermarket.service.impl;
 
 
-import org.example.spring.supermarket.dto.CategoryDTO;
+import org.example.spring.supermarket.DTO.CategoryDTO;
 import org.example.spring.supermarket.entity.Categories;
 import org.example.spring.supermarket.repository.CategoryRepository;
 import org.example.spring.supermarket.service.CategoryService;

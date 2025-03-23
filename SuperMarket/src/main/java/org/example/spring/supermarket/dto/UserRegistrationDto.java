@@ -1,4 +1,4 @@
-package org.example.spring.supermarket.dto;
+package org.example.spring.supermarket.DTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRegistrationDto {
-    
-    @NotEmpty(message = "Username cannot be empty")
+
+    @NotEmpty(message = "Username is required")
     private String username;
-    
-    @NotEmpty(message = "Password cannot be empty")
-    private String password;
+
+    @NotEmpty(message = "User type is required")
+    private String userType;
     
     @NotEmpty(message = "Confirm password cannot be empty")
     private String confirmPassword;
@@ -32,4 +32,6 @@ public class UserRegistrationDto {
     private Boolean gender = true;
     
     private String address;
+
+
 }

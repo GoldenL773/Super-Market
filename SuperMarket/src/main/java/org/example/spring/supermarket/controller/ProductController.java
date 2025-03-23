@@ -1,7 +1,7 @@
 package org.example.spring.supermarket.controller;
 
 import jakarta.validation.Valid;
-import org.example.spring.supermarket.DTO.productDTO;
+import org.example.spring.supermarket.DTO.ProductDTO;
 import org.example.spring.supermarket.entity.Categories;
 import org.example.spring.supermarket.entity.Inventory;
 import org.example.spring.supermarket.entity.Product;
@@ -66,7 +66,7 @@ public class ProductController {
 
     @GetMapping("/create")
     public String createProduct(Model model) {
-        productDTO productDTO =  new productDTO();
+        ProductDTO productDTO =  new productDTO();
         List<Categories> categories = categoriesRepository.findAll();
         model.addAttribute("productDTO", productDTO);
         model.addAttribute("categories", categories);
@@ -75,7 +75,7 @@ public class ProductController {
     }
     @PostMapping("/create")
     public String createProduct(
-            @Valid @ModelAttribute("productDTO") productDTO productDTO,
+            @Valid @ModelAttribute("productDTO") ProductDTO productDTO,
             BindingResult result,
             Model model) {
 
@@ -220,7 +220,7 @@ public class ProductController {
         Product product = productOpt.get();
 
         // Đổ dữ liệu từ Product sang DTO
-        productDTO dto = new productDTO();
+        ProductDTO dto = new ProductDTO();
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
         dto.setPrice(product.getPrice());
@@ -244,7 +244,7 @@ public class ProductController {
 
     @PostMapping("/update/{id}")
     public String updateProduct(@PathVariable("id") int id,
-                                @Valid @ModelAttribute("productDTO") productDTO dto,
+                                @Valid @ModelAttribute("productDTO") ProductDTO dto,
                                 BindingResult result,
                                 Model model) {
         if (result.hasErrors()) {

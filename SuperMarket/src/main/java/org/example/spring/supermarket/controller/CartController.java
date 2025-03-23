@@ -3,7 +3,7 @@ package org.example.spring.supermarket.controller;
 
 
 import jakarta.servlet.http.HttpSession;
-import org.example.spring.supermarket.dto.ProductDTO;
+import org.example.spring.supermarket.DTO.ProductDTO;
 import org.example.spring.supermarket.entity.Customer;
 import org.example.spring.supermarket.entity.Order;
 import org.example.spring.supermarket.service.CartService;

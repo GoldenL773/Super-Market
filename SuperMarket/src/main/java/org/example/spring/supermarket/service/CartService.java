@@ -1,7 +1,7 @@
 package org.example.spring.supermarket.service;
 
 
-import org.example.spring.supermarket.dto.ProductDTO;
+import org.example.spring.supermarket.DTO.ProductDTO;
 import org.example.spring.supermarket.entity.Cart;
 import org.example.spring.supermarket.entity.Customer;
 import org.example.spring.supermarket.entity.Order;
