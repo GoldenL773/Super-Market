@@ -104,4 +104,13 @@ public class HomeController {
         model.addAttribute("productRelative", list);
         return "detail-product";
     }
+
+
+
+    @GetMapping("/nice-table")
+    public String table() {
+        return "/quixlab-master/widgets";
+    }
 }
+
+
