@@ -1,26 +1,66 @@
 package org.example.spring.supermarket.entity;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Set;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "Permissions")
 public class Permission {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "permission_id", nullable = false, columnDefinition = "int")
-    private int id;
+    @Column(name = "permission_id")
+    private Integer permissionId;
 
-    @Column(name = "permission_name", nullable = false, length = 50, columnDefinition = "nvarchar(50)")
+    @Column(name = "permission_name", nullable = false, length = 50)
     private String permissionName;
 
-    @Column(name = "url", nullable = true, length = 50, columnDefinition = "varchar(50)")
+    @Column(name = "url", length = 50)
     private String url;
+
+    @OneToMany(mappedBy = "permission")
+    private Set<RolePermission> rolePermissions;
+
+    // Constructors
+    public Permission() {
+    }
+
+    public Permission(String permissionName, String url) {
+        this.permissionName = permissionName;
+        this.url = url;
+    }
+
+    // Getters and Setters
+    public Integer getPermissionId() {
+        return permissionId;
+    }
+
+    public void setPermissionId(Integer permissionId) {
+        this.permissionId = permissionId;
+    }
+
+    public String getPermissionName() {
+        return permissionName;
+    }
+
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Set<RolePermission> getRolePermissions() {
+        return rolePermissions;
+    }
+
+    public void setRolePermissions(Set<RolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
+    }
 }
