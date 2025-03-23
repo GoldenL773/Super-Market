@@ -111,7 +111,7 @@ public class ProductController {
         if (imageFile != null && !imageFile.isEmpty()) {
             try {
                 // Đường dẫn thư mục lưu ảnh (tuyệt đối)
-                String uploadDir = "src/main/resources/static/images/";
+                String uploadDir = "uploads/";
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs(); // Tạo thư mục nếu chưa tồn tại
@@ -125,7 +125,7 @@ public class ProductController {
                 Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
                 // Lưu đường dẫn ảnh vào database
-                product.setImage("/images/" + fileName);
+                product.setImage("/uploads/" + fileName);
 
                 System.out.println("✅ Ảnh đã lưu thành công: " + filePath);
             } catch (IOException e) {
@@ -276,7 +276,7 @@ public class ProductController {
         MultipartFile newImage = dto.getImage();
         if (newImage != null && !newImage.isEmpty()) {
             try {
-                String uploadDir = "src/main/resources/static/images/";
+                String uploadDir = "uploads/";
                 File folder = new File(uploadDir);
                 if (!folder.exists()) {
                     folder.mkdirs();
@@ -294,7 +294,7 @@ public class ProductController {
                 Path filePath = Paths.get(uploadDir, newFileName);
                 Files.copy(newImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-                product.setImage("/images/" + newFileName);
+                product.setImage("/uploads/" + newFileName);
             } catch (IOException e) {
                 throw new RuntimeException("Lỗi khi cập nhật ảnh", e);
             }
