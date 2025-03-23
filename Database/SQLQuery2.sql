@@ -360,7 +360,6 @@ CREATE TABLE [dbo].[Stock_Entries](
 	[stock_entry_id] [int] IDENTITY(1,1) NOT NULL,
 	[product_id] [int] NOT NULL,
 	[inventory_id] [int] NOT NULL,
-	[supplier_id] [int] NULL,
 	[batch_number] [nvarchar](50) NULL,
 	[quantity] [int] NOT NULL,
 	[purchase_price] [decimal](10, 2) NOT NULL,
