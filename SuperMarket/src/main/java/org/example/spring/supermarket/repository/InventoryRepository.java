@@ -1,6 +1,7 @@
 package org.example.spring.supermarket.repository;
 
 import org.example.spring.supermarket.entity.Inventory;
+import org.example.spring.supermarket.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
     
         @Query("SELECT i FROM Inventory i WHERE i.product.id = :productId")
         Optional<Inventory> findByProductId(@Param("productId") int productId);
+
+        List<Inventory> findByProduct(Product product);
+//        Optional<Inventory> findByProductId(int productId);
 }

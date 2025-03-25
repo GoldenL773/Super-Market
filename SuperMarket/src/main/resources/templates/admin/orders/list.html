@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Orders List</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Orders Management</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+<!--            <th>Order Number</th>-->
+            <th>Status</th>
+            <th>Created Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}">1</td>
+
+            <td th:text="${order.status}">Shipped</td>
+            <td th:text="${#dates.format(order.createdAt, 'MM/dd/yyyy HH:mm')}">03/23/2025 16:40</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(orders)}">
+            <td colspan="4">No orders available.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

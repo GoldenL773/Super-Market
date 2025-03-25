@@ -11,7 +11,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -45,7 +51,7 @@ public class SecurityConfig {
                         form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/", true)
+                                .successHandler(customAuthenticationSuccessHandler())
                                 .failureUrl("/login?error=true")
                                 .permitAll()
                 )
@@ -59,6 +65,24 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                                org.springframework.security.core.Authentication authentication)
+                    throws IOException, ServletException {
+                boolean isStaff = authentication.getAuthorities().stream()
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_STAFF"));
+                if (isStaff) {
+                    response.sendRedirect("/admin");
+                } else {
+                    response.sendRedirect("/");
+                }
+            }
+        };
     }
 
     @Bean

@@ -16,5 +16,6 @@ public interface OrderService {
     Order updateOrder(Order order);
     void deleteOrder(int id);
 
-
+    void updateStatus(int id, String status);
+    List<Order> findAll();
 }

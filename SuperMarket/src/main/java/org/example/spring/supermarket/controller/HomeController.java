@@ -62,6 +62,7 @@ public class HomeController {
         logger.warn("Debug Category:" + categoryDTOList.size());
         logger.warn("Debug Category:" + categoryDTOList.get(1).getImage());
         model.addAttribute("categories", categoryDTOList);
+
         return "index";
     }
 

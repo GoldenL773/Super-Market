@@ -96,4 +96,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    @Override
+    public void updateStatus(int id, String status) {
+        Optional<Order> orderOpt = orderRepository.findById(id);
+        if (orderOpt.isPresent()) {
+            Order order = orderOpt.get();
+            order.setStatus(status);
+            orderRepository.save(order);
+        }
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
+
 }
