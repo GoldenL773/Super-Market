@@ -19,6 +19,8 @@ public class Categories {
     private int id;
     @Column(name = "name", nullable = false,columnDefinition = "nvarchar(100)")
     private String name;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Product> products;
 
     @Column(name = "description", nullable = false,  columnDefinition = "nvarchar(max)")
     private String description;

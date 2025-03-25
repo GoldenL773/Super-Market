@@ -1,45 +1,57 @@
 package org.example.spring.supermarket.DTO;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class UserRegistrationDto {
+/**
+ * Data Transfer Object for user registration and profile updates
+ */
+public class UserDTO {
 
-    @NotEmpty(message = "Username cannot be empty")
-    @Size(min = 4, max = 50, message = "Username must be between 4 and 50 characters")
+    private Integer id;
+
+    @NotBlank(message = "Username is required")
+    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
     private String username;
 
-    @NotEmpty(message = "Password cannot be empty")
-    @Size(min = 6, max = 255, message = "Password must be at least 6 characters")
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 100, message = "Password must be at least 6 characters")
     private String password;
 
-    @NotEmpty(message = "Confirm password cannot be empty")
     private String confirmPassword;
 
-    @NotEmpty(message = "Full name cannot be empty")
-    @Size(max = 100, message = "Full name must be less than 100 characters")
+    @NotBlank(message = "Full name is required")
+    @Size(max = 100, message = "Full name must be maximum 100 characters")
     private String fullName;
 
-    @NotEmpty(message = "Email cannot be empty")
-    @Email(message = "Please provide a valid email address")
+    private String image;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
 
-    @Size(max = 15, message = "Phone number must be less than 15 characters")
+    @Size(max = 15, message = "Phone number must be maximum 15 characters")
     private String phoneNumber;
 
-    @NotNull(message = "Gender cannot be null")
+    @NotNull(message = "Gender is required")
     private Boolean gender;
 
     private String address;
 
-    @NotEmpty(message = "User type cannot be empty")
-    private String userType; // 'CUSTOMER' or 'STAFF'
-
-    private Boolean agreeTerms;
+    @NotNull(message = "Role is required")
+    private String userType; // "customer" or "staff"
 
     // Getters and Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -70,6 +82,14 @@ public class UserRegistrationDto {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getEmail() {
@@ -110,13 +130,5 @@ public class UserRegistrationDto {
 
     public void setUserType(String userType) {
         this.userType = userType;
-    }
-
-    public Boolean getAgreeTerms() {
-        return agreeTerms;
-    }
-
-    public void setAgreeTerms(Boolean agreeTerms) {
-        this.agreeTerms = agreeTerms;
     }
 }

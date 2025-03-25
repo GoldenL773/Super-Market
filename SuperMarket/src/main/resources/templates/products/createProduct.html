@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <base href="/admin/" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        /* Product Edit Form Styling */
+        .container-fluid form {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .container-fluid form label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #464a53;
+        }
+
+        .container-fluid form input[type="text"],
+        .container-fluid form input[type="number"],
+        .container-fluid form select,
+        .container-fluid form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .container-fluid form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .container-fluid form input[type="file"] {
+            padding: 8px 0;
+        }
+
+        .container-fluid form .error {
+            display: block;
+            color: #ff4b5a;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .container-fluid form button.btn {
+            background-color: #7571f9;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .container-fluid form button.btn:hover {
+            background-color: #5d5af8;
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .container-fluid form {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+        </svg>
+    </div>
+</div>
+
+<div id="main-wrapper">
+
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="index.html">
+                <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
+                <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+                <span class="brand-title">
+                        <img src="images/logo-text.png" alt="">
+                    </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+                <li class="nav-label">Dashboard</li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="./index.html">Home 1</a></li>
+                        <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+                    </ul>
+                </li>
+
+                <li class="nav-label">Apps</li>
+
+                <li>
+
+                    <a href="/products/list" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">Quản lý sản phẩm</span>
+                    </a>
+
+                <li class="nav-label">Pages</li>
+                <li>
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="./page-login.html">Login</a></li>
+                        <li><a href="./page-register.html">Register</a></li>
+                        <li><a href="./page-lock.html">Lock Screen</a></li>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
+                            <ul aria-expanded="false">
+                                <li><a href="./page-error-404.html">Error 404</a></li>
+                                <li><a href="./page-error-403.html">Error 403</a></li>
+                                <li><a href="./page-error-400.html">Error 400</a></li>
+                                <li><a href="./page-error-500.html">Error 500</a></li>
+                                <li><a href="./page-error-503.html">Error 503</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+
+        <div class="container-fluid mt-4">
+            <h2>Thêm Sản Phẩm Mới</h2>
+            <form method="post" enctype="multipart/form-data" th:action="@{/products/create}" th:object="${productDTO}">
+
+                <!-- Tên sản phẩm -->
+                <label for="name">Tên sản phẩm:</label>
+                <input type="text" id="name" name="name" th:field="*{name}" required />
+                <!--        <span class="error" th:if="${#fields.hasErrors('productName')}" th:errors="*{name}"></span>-->
+
+                <!-- Giá -->
+                <label for="price">Giá:</label>
+                <input type="number" id="price" name="price" th:field="*{price}" step="0.01" required />
+                <!--        <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>-->
+
+                <!-- Mô tả sản phẩm -->
+                <label for="description">Mô tả:</label>
+                <textarea id="description" name="description" th:field="*{description}"></textarea>
+                <!--        <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
+
+                <!-- Danh mục sản phẩm -->
+                <label for="category">Danh mục:</label>
+                <select id="category" name="categoryId" th:field="*{categoryId}" required>
+                    <option value="">-- Chọn danh mục --</option>
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+                <!--        <span class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{categoryId}"></span>-->
+
+                <!-- Ảnh sản phẩm -->
+                <label for="image">Ảnh sản phẩm:</label>
+                <input type="file" id="image" name="image" accept="image/*" th:field="*{image}" required>
+                <!--        <span class="error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>-->
+
+                <!-- Số lượng trong kho -->
+                <label for="quantity">Số lượng trong kho:</label>
+                <input type="number" id="quantity" name="quantity" th:field="*{quantity}" required />
+                <!--        <span class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>-->
+
+                <!-- Giá nhập hàng -->
+                <label for="purchasePrice">Giá nhập hàng:</label>
+                <input type="number" id="purchasePrice" name="purchasePrice" th:field="*{purchasePrice}" step="0.01" required />
+                <span class="error" th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
+
+                <!-- Ngày nhập hàng -->
+                <!--        <label for="purchaseDate">Ngày nhập hàng:</label>-->
+                <!--        <input type="date" id="purchaseDate" name="purchaseDate" th:field="*{purchaseDate}" required />-->
+                <!--        <span class="error" th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}"></span>-->
+
+                <button type="submit" class="btn">Lưu sản phẩm</button>
+            </form>
+
+        </div>
+
+        <!-- #/ container -->
+    </div>
+
+    <div class="footer">
+        <div class="copyright">
+            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+        </div>
+    </div>
+</div>
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/gleek.js"></script>
+<script src="js/styleSwitcher.js"></script>
+<script src="./js/dashboard/dashboard-2.js"></script>
+<script>
+    window.localStorage.clear();
+    $(document).ready(function () {
+
+        $('#list-items').html(localStorage.getItem('listItems'));
+
+        $('.add-items').submit(function(event)
+        {
+            event.preventDefault();
+
+            var item = $('#todo-list-item').val();
+            if(item)
+            {
+                $('#list-items').append("<li><div class='round d-inline-block'><input type='checkbox' id='checkbox' /><label for='checkbox'></label></div><label for='checkbox'>" + item + "</label><a class='remove'><i class='fa fa-trash'></i></a></li>");
+
+                localStorage.setItem('listItems', $('#list-items').html());
+
+                $('#todo-list-item').val("");
+            }
+
+        });
+
+        $(document).on('change', '.checkbox', function()
+        {
+            if($(this).attr('checked'))
+            {
+                $(this).removeAttr('checked');
+            }
+            else
+            {
+                $(this).attr('checked', 'checked');
+            }
+
+            $(this).parent().toggleClass('completed');
+
+            localStorage.setItem('listItems', $('#list-items').html());
+        });
+
+        $(document).on('click', '.remove', function()
+        {
+            $(this).parent().remove();
+
+            localStorage.setItem('listItems', $('#list-items').html());
+        });
+
+    });
+</script>
+</body>
+
+</html>
