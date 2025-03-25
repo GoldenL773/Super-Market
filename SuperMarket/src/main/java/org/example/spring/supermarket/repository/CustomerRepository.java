@@ -19,7 +19,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     Optional<Customer> findCustomerByUsernameContainingIgnoreCase(String username);
 
-
+    Optional<Customer> findFirstByUsername(String username);
     
     
     boolean existsByUsername(String username);

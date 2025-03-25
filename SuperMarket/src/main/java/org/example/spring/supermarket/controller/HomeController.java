@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,7 @@ public class HomeController {
     private CustomerService customerService;
     private CartService cartService;
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
     public HomeController(CategoryService categoryService,
                           ProductService productService,
                           CustomerService customerService,
@@ -40,22 +43,28 @@ public class HomeController {
         this.customerService = customerService;
         this.cartService = cartService;
     }
-    @GetMapping("/")
+
+    @GetMapping({"/", "/home"})
     public String home(Model model, HttpSession session) {
-        // Set session customer sau khi login
-        Customer c = customerService.findByUsername("Nam@123");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+
+        // Fetch customer using the authenticated username
+        Customer c = customerService.findByUsername(user.getUsername());
 
         Map<ProductDTO, Integer> cartItems = cartService.getCartItems(c);
         double total = cartService.getCartTotal(c);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("total", total);
-        session.setAttribute("customer",c);
+        session.setAttribute("customer", c);
         List<CategoryDTO> categoryDTOList = categoryService.getAll();
-        logger.warn("Debug Category:"+categoryDTOList.size());
-        logger.warn("Debug Category:"+categoryDTOList.get(1).getImage());
+        logger.warn("Debug Category:" + categoryDTOList.size());
+        logger.warn("Debug Category:" + categoryDTOList.get(1).getImage());
         model.addAttribute("categories", categoryDTOList);
         return "index";
-}
+    }
+
     @GetMapping(value = "/shop")
     public String shop(@RequestParam(required = false) String id,
                        @RequestParam(required = false) String query,
@@ -110,10 +119,11 @@ public class HomeController {
         model.addAttribute("products", productDTOPage.getContent());
         return "shop";
     }
+
     @GetMapping("/detail")
-    public String detailProduct(@RequestParam("id") int id , Model model) {
+    public String detailProduct(@RequestParam("id") int id, Model model) {
         ProductDTO productDTO = productService.getById(id);
-        List<ProductDTO>  list  = productService.getProductRandomByCategory(id);
+        List<ProductDTO> list = productService.getProductRandomByCategory(id);
         model.addAttribute("product", productDTO);
         model.addAttribute("productRelative", list);
         return "detail-product";

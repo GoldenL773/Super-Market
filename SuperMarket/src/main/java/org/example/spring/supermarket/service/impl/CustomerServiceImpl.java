@@ -24,7 +24,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findByUsername(String username) {
-        return customerRepository.findCustomerByUsernameContainingIgnoreCase(username).orElse(null);
+        return customerRepository
+                .findFirstByUsername(username)
+                .orElse(null);
     }
 
     @Override
