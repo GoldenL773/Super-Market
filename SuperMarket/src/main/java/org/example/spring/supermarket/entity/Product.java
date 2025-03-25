@@ -39,7 +39,7 @@ public class Product {
     private Date createdAt;
 
     @OneToMany(mappedBy = "product")
-    private List<OrderDetail> orderDetails;
+    private List<OrderDetails> orderDetails;
 
     @OneToMany(mappedBy = "product")
     private List<Cart> cartItems;

@@ -2,30 +2,25 @@ package org.example.spring.supermarket.service;
 
 
 import org.example.spring.supermarket.dto.ProductDTO;
-import org.example.spring.supermarket.entity.Cart;
 import org.example.spring.supermarket.entity.Customer;
 import org.example.spring.supermarket.entity.Order;
 import org.example.spring.supermarket.entity.Product;
 
-import java.util.List;
 import java.util.Map;
 
 public interface CartService {
 
+    void addToCart(Customer customer, Product product, int quantity);
 
-    void addToCart(String sessionId, int productId, int quantity);
+    void updateCartItemQuantity(Customer customer, Product product, int quantity);
 
-    void removeFromCart(String sessionId, int productId);
+    void removeFromCart(Customer customer, Product product);
 
-    void updateCartItemQuantity(String sessionId, int productId, int quantity);
+    void clearCart(Customer customer);
 
-    void clearCart(String sessionId);
+    Map<ProductDTO, Integer> getCartItems(Customer customer);
 
-    Map<ProductDTO, Integer> getCartItems(String sessionId);
+    double getCartTotal(Customer customer);
 
-    int getCartSize(String sessionId);
-
-    double getCartTotal(String sessionId);
-
-    Order checkout(String sessionId, Customer customer);
+    Order checkout(Customer customer);
 }

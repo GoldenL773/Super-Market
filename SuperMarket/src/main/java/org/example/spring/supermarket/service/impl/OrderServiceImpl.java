@@ -43,34 +43,35 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrdersByCustomer(Customer customer) {
-        return List.of();
+        return orderRepository.findByCustomer(customer);
     }
+
     @Override
     @Transactional
-    public Order createOrder(Order order, List<OrderDetail> orderDetails) {
+    public Order createOrder(Order order, List<OrderDetails> orderDetails) {
         order.setCreatedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-        
+
         // Calculate total amount
         double totalAmount = 0.0;
-        for (OrderDetail detail : orderDetails) {
-            totalAmount +=( Double.parseDouble(detail.getPrice().toString()) * detail.getQuantity());
+        for (OrderDetails detail : orderDetails) {
+            totalAmount += (Double.parseDouble(detail.getPrice().toString()) * detail.getQuantity());
         }
         order.setTotalAmount(BigDecimal.valueOf(totalAmount));
-        
+
         // Save the order first
         Order savedOrder = orderRepository.save(order);
-        
+
         // Save order details and update product stock
-        for (OrderDetail detail : orderDetails) {
+        for (OrderDetails detail : orderDetails) {
             detail.setOrder(savedOrder);
             orderDetailRepository.save(detail);
-            
+
             // Update product stock
             Inventory inventory = inventoryService.getInventory(detail.getProduct().getId());
             inventory.setQuantity(inventory.getQuantity() - detail.getQuantity());
             inventoryService.update(detail.getProduct().getId(), inventory.getQuantity());
         }
-        
+
         return savedOrder;
     }
 
@@ -86,9 +87,9 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> orderOpt = orderRepository.findById(id);
         if (orderOpt.isPresent()) {
             Order order = orderOpt.get();
-            List<OrderDetail> details = orderDetailRepository.findByOrder(order);
+            List<OrderDetails> details = orderDetailRepository.findByOrder(order);
             orderDetailRepository.deleteAll(details);
-            
+
             // Then delete the Order
             orderRepository.deleteById(id);
         }
