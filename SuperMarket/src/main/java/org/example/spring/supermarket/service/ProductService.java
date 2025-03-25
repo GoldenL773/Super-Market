@@ -1,12 +1,11 @@
 package org.example.spring.supermarket.service;
 
 
-import org.example.spring.supermarket.dto.ProductDTO;
+import org.example.spring.supermarket.DTO.ProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface ProductService {

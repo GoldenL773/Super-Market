@@ -1,7 +1,6 @@
 package org.example.spring.supermarket.controller;
 import jakarta.servlet.http.HttpSession;
-import org.example.spring.supermarket.dto.ProductDTO;
-import org.example.spring.supermarket.entity.Cart;
+import org.example.spring.supermarket.DTO.ProductDTO;
 import org.example.spring.supermarket.entity.Customer;
 import org.example.spring.supermarket.entity.Order;
 import org.example.spring.supermarket.entity.Product;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 
 @Controller

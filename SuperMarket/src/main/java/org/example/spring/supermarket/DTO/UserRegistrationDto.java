@@ -1,4 +1,4 @@
-package org.example.spring.supermarket.dto;
+package org.example.spring.supermarket.DTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

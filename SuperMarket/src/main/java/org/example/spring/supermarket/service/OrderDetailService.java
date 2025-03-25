@@ -1,6 +1,6 @@
 package org.example.spring.supermarket.service;
 
-import org.example.spring.supermarket.dto.ProductDTO;
+import org.example.spring.supermarket.DTO.ProductDTO;
 import org.example.spring.supermarket.entity.Order;
 import org.example.spring.supermarket.entity.OrderDetails;
 import org.springframework.stereotype.Service;

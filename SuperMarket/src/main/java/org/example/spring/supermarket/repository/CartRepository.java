@@ -1,6 +1,5 @@
 package org.example.spring.supermarket.repository;
 
-import org.example.spring.supermarket.dto.ProductDTO;
 import org.example.spring.supermarket.entity.Cart;
 import org.example.spring.supermarket.entity.Customer;
 import org.example.spring.supermarket.entity.Product;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Repository
