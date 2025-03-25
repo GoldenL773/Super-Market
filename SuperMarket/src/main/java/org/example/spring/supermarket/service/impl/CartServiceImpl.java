@@ -111,7 +111,7 @@ public class CartServiceImpl implements CartService {
             p.setPrice(product.getPrice());
             p.setCategory(categoryService.getCategories(product.getCategoryId()));
             p.setDescription(product.getDescription());
-            p.setImage(product.getImage());
+            p.setImage(String.valueOf(product.getImage()));
             p.setCreatedAt(product.getCreatedAt());
             int quantity = entry.getValue();
             OrderDetails detail = new OrderDetails();

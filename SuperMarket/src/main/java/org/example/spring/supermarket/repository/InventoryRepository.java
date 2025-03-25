@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
         Inventory getInventoriesByProductId(int productId);

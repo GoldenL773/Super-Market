@@ -26,7 +26,7 @@ public class Categories {
     private String description;
     @Column(name = "image", nullable = true, columnDefinition = "nvarchar(max)")
     private String image;
-
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+//
+//    @OneToMany(mappedBy = "category")
+//    private List<Product> products;
 }

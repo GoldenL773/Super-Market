@@ -61,7 +61,7 @@ public class CartController {
         productService.getProductById(productId).ifPresent(productDTO -> {
             product.setName(productDTO.getName());
             product.setPrice(productDTO.getPrice());
-            product.setImage(productDTO.getImage());
+            product.setImage(String.valueOf(productDTO.getImage()));
             product.setCategory(categoryService.getCategories(productDTO.getCategoryId()));
             product.setDescription(productDTO.getDescription());
             product.setCreatedAt(productDTO.getCreatedAt());
@@ -94,7 +94,7 @@ public class CartController {
         productService.getProductById(productId).ifPresent(productDTO -> {
             product.setName(productDTO.getName());
             product.setPrice(productDTO.getPrice());
-            product.setImage(productDTO.getImage());
+            product.setImage(String.valueOf( productDTO.getImage()));
             product.setCategory(categoryService.getCategories(productDTO.getCategoryId()));
             product.setDescription(productDTO.getDescription());
             product.setCreatedAt(productDTO.getCreatedAt());
