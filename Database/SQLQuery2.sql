@@ -162,14 +162,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Order_details](
-	[order_detailsId] [int] IDENTITY(1,1) NOT NULL,
+	[orderd_id] [int] IDENTITY(1,1) NOT NULL,
 	[order_id] [int] NULL,
 	[product_id] [int] NULL,
 	[quantity] [int] NOT NULL,
 	[price] [decimal](10, 2) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[order_detailsId] ASC
+	[orderd_id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO

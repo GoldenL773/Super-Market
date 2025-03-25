@@ -127,11 +127,42 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-shopping-basket"></i> <span class="badge badge-primary">5</span>
+                            <a th:href="@{/cart}" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-shopping-basket"></i> <span class="badge badge-primary"
+                                                                            th:text="${cartItems != null ? cartItems.size() : 0}">0</span>
                             </a>
                             <div class="dropdown-menu shopping-cart">
-                                <a th:href="@{/cart}" class="btn btn-default">View Cart</a>
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Your Cart</div>
+                                    </li>
+                                    <li th:each="entry : ${cartItems}">
+                                        <div class="shopping-cart-list">
+                                            <div class="media">
+                                                <img class="d-flex mr-3" th:src="${entry.key.image}" width="60" alt="Product Image">
+                                                <div class="media-body">
+                                                    <h5 th:text="${entry.key.name}">Product</h5>
+                                                    <p class="price">
+                                                        <span th:text="'Rp. ' + ${entry.key.price}">Rp. 0</span>
+                                                    </p>
+                                                    <p class="text-muted" th:text="'Qty: ' + ${entry.value}">Qty: 0</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="drop-title d-flex justify-content-between">
+                                            <span>Total:</span>
+                                            <span class="text-primary"><strong
+                                                    th:text="'Rp. ' + ${total}">Rp. 0</strong></span>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex justify-content-between pl-3 pr-3 pt-3">
+                                        <a th:href="@{/cart}" class="btn btn-default">View Cart</a>
+                                        <a th:href="@{/cart/checkout}" class="btn btn-primary">Checkout</a>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
                     </ul>

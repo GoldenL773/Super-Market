@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css">
     <link href="/assets/fonts/sb-bistro/sb-bistro.css" rel="stylesheet" type="text/css">
     <link href="/assets/fonts/font-awesome/font-awesome.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" media="all" href="/assets/packages/bootstrap/bootstrap.css">
@@ -13,43 +14,60 @@
     <link rel="stylesheet" type="text/css" media="all" href="/assets/packages/owl-carousel/owl-carousel.css">
     <link rel="stylesheet" type="text/css" media="all" href="/assets/packages/cloudzoom/cloudzoom.css">
     <link rel="stylesheet" type="text/css" media="all" href="/assets/packages/thumbelina/thumbelina.css">
-    <link rel="stylesheet" type="text/css" media="all" href="/assets/packages/bootstrap-touchspin/bootstrap-touchspin.css">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/assets/packages/bootstrap-touchspin/bootstrap-touchspin.css">
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/theme.css">
 </head>
 <body>
 <div class="page-header">
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-transparent" id="page-navigation">
         <div class="container">
-            <a href="/" class="navbar-brand">
+            <a th:href="@{/}" class="navbar-brand">
                 <img src="/assets/img/logo/logo.png" alt="">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarcollapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href="/shop" class="nav-link">Shop</a>
+                        <a th:href="@{/shop}" class="nav-link">Shop</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/register" class="nav-link">Register</a>
+                    <li class="nav-item" th:if="${session.customer == null}">
+                        <a th:href="@{/register}" class="nav-link">Register</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/login" class="nav-link">Login</a>
+                    <li class="nav-item" th:if="${session.customer == null}">
+                        <a th:href="@{/login}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item dropdown" th:if="${session.customer != null}">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar-header"><img src="/assets/img/logo/avatar.jpg" alt="Avatar"></div>
+                            <span th:text="${session.customer.fullName}"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/transaction}">Transactions History</a>
+                            <a class="dropdown-item" th:href="@{/setting}">Settings</a>
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="/cart" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-shopping-basket"></i> <span class="badge badge-primary" th:text="${cartItems != null ? cartItems.size() : 0}">0</span>
+                        <a th:href="@{/cart}" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-shopping-basket"></i> <span class="badge badge-primary"
+                                  th:text="${cartItems != null ? cartItems.size() : 0}">0</span>
                         </a>
                         <div class="dropdown-menu shopping-cart">
                             <ul>
-                                <li><div class="drop-title">Your Cart</div></li>
                                 <li>
-                                    <div class="shopping-cart-list" th:each="entry : ${cartItems}">
+                                    <div class="drop-title">Your Cart</div>
+                                </li>
+                                <li th:each="entry : ${cartItems}">
+                                    <div class="shopping-cart-list">
                                         <div class="media">
-                                            <img class="d-flex mr-3" th:src="${entry.key.image}" width="60">
+                                            <img class="d-flex mr-3" th:src="${entry.key.image}" width="60" alt="Product Image">
                                             <div class="media-body">
-                                                <h5><a th:text="${entry.key.name}">Product</a></h5>
+                                                <h5 th:text="${entry.key.name}">Product</h5>
                                                 <p class="price">
                                                     <span th:text="'Rp. ' + ${entry.key.price}">Rp. 0</span>
                                                 </p>
@@ -61,12 +79,13 @@
                                 <li>
                                     <div class="drop-title d-flex justify-content-between">
                                         <span>Total:</span>
-                                        <span class="text-primary"><strong th:text="'Rp. ' + ${total}">Rp. 0</strong></span>
+                                        <span class="text-primary"><strong
+                                                th:text="'Rp. ' + ${total}">Rp. 0</strong></span>
                                     </div>
                                 </li>
                                 <li class="d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <a href="/cart" class="btn btn-default">View Cart</a>
-                                    <a href="/cart/checkout" class="btn btn-primary">Checkout</a>
+                                    <a th:href="@{/cart}" class="btn btn-default">View Cart</a>
+                                    <a th:href="@{/cart/checkout}" class="btn btn-primary">Checkout</a>
                                 </li>
                             </ul>
                         </div>
@@ -79,7 +98,8 @@
 
 <div id="page-content" class="page-content">
     <div class="banner">
-        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('/assets/img/bg-header.jpg');">
+        <div class="jumbotron jumbotron-bg text-center rounded-0"
+             style="background-image: url('/assets/img/bg-header.jpg');">
             <div class="container">
                 <h1 class="pt-5">Your Cart</h1>
                 <p class="lead">Save time and leave the groceries to us.</p>
@@ -110,7 +130,7 @@
                             <tbody>
                             <tr th:each="entry : ${cartItems}">
                                 <td>
-                                    <img th:src="${entry.key.image ?: '/assets/img/logo/avatar.jpg'}" width="60">
+                                    <img th:src="${entry.key.image ?: '/assets/img/logo/avatar.jpg'}" width="60" alt="Product Image">
                                 </td>
                                 <td>
                                     <span th:text="${entry.key.name}">Product Name</span><br>
@@ -119,8 +139,10 @@
                                 <td>
                                     <form th:action="@{/cart/update}" method="post" class="form-inline">
                                         <input type="hidden" name="productId" th:value="${entry.key.id}">
-                                        <input class="vertical-spin form-control" type="number" name="quantity" th:value="${entry.value}"
-                                               data-bts-button-down-class="btn btn-primary" data-bts-button-up-class="btn btn-primary">
+                                        <input class="vertical-spin form-control" type="number" name="quantity"
+                                               th:value="${entry.value}"
+                                               data-bts-button-down-class="btn btn-primary"
+                                               data-bts-button-up-class="btn btn-primary">
                                         <button type="submit" class="btn btn-primary btn-sm ml-2">Update</button>
                                     </form>
                                 </td>
@@ -128,7 +150,8 @@
                                 <td>
                                     <form th:action="@{/cart/remove}" method="post">
                                         <input type="hidden" name="productId" th:value="${entry.key.id}">
-                                        <button type="submit" class="btn btn-link text-danger"><i class="fa fa-times"></i></button>
+                                        <button type="submit" class="btn btn-link text-danger"><i
+                                                class="fa fa-times"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -137,7 +160,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <a href="/shop" class="btn btn-default">Continue Shopping</a>
+                    <a th:href="@{/shop}" class="btn btn-default">Continue Shopping</a>
                     <form th:action="@{/cart/clear}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-danger">Clear Cart</button>
                     </form>
@@ -151,7 +174,8 @@
                     </div>
                     <div class="clearfix"></div>
                     <h6 class="mt-3" th:text="'Total: Rp. ' + ${total}">Total: Rp. 0</h6>
-                    <a href="/cart/checkout" class="btn btn-lg btn-primary">Checkout <i class="fa fa-long-arrow-right"></i></a>
+                    <a th:href="@{/cart/checkout}" class="btn btn-lg btn-primary">Checkout <i
+                            class="fa fa-long-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -163,17 +187,18 @@
         <div class="row">
             <div class="col-md-3">
                 <h5>About</h5>
-                <p>Nisi esse dolor irure dolor eiusmod ex deserunt proident cillum eu qui enim occaecat sunt aliqua anim eiusmod qui ut voluptate.</p>
+                <p>Nisi esse dolor irure dolor eiusmod ex deserunt proident cillum eu qui enim occaecat sunt aliqua anim
+                    eiusmod qui ut voluptate.</p>
             </div>
             <div class="col-md-3">
                 <h5>Links</h5>
                 <ul>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="/faq">FAQ</a></li>
+                    <li><a th:href="@{/about}">About</a></li>
+                    <li><a th:href="@{/contact}">Contact Us</a></li>
+                    <li><a th:href="@{/faq}">FAQ</a></li>
                     <li><a href="#">How it Works</a></li>
-                    <li><a href="/terms">Terms</a></li>
-                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a th:href="@{/terms}">Terms</a></li>
+                    <li><a th:href="@{/privacy}">Privacy Policy</a></li>
                 </ul>
             </div>
             <div class="col-md-3">

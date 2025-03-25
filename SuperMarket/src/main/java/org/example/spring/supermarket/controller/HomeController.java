@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.spring.supermarket.dto.CategoryDTO;
 import org.example.spring.supermarket.dto.ProductDTO;
 import org.example.spring.supermarket.entity.Customer;
+import org.example.spring.supermarket.service.CartService;
 import org.example.spring.supermarket.service.CategoryService;
 import org.example.spring.supermarket.service.CustomerService;
 import org.example.spring.supermarket.service.ProductService;
@@ -17,12 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -30,16 +29,26 @@ public class HomeController {
     private CategoryService categoryService;
     private ProductService productService;
     private CustomerService customerService;
+    private CartService cartService;
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-    public HomeController(CategoryService categoryService, ProductService productService, CustomerService customerService) {
+    public HomeController(CategoryService categoryService,
+                          ProductService productService,
+                          CustomerService customerService,
+                          CartService cartService) {
         this.categoryService = categoryService;
         this.productService = productService;
         this.customerService = customerService;
+        this.cartService = cartService;
     }
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
+        // Set session customer sau khi login
         Customer c = customerService.findByUsername("Nam@123");
 
+        Map<ProductDTO, Integer> cartItems = cartService.getCartItems(c);
+        double total = cartService.getCartTotal(c);
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("total", total);
         session.setAttribute("customer",c);
         List<CategoryDTO> categoryDTOList = categoryService.getAll();
         logger.warn("Debug Category:"+categoryDTOList.size());
@@ -56,7 +65,7 @@ public class HomeController {
                        @RequestParam(defaultValue = "asc") String sortDirection,
                        @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "9") int size,
-                       Model model) {
+                       Model model, HttpSession session) {
         if (sortByPrice != null && !sortByPrice.isEmpty()) {
             sortBy = "price";
             sortDirection = sortByPrice;
@@ -86,6 +95,11 @@ public class HomeController {
         } else {
             productDTOPage = productService.sortProducts(pageable);
         }
+        Customer customer = (Customer) session.getAttribute("customer");
+        Map<ProductDTO, Integer> cartItems = cartService.getCartItems(customer);
+        double total = cartService.getCartTotal(customer);
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("total", total);
         model.addAttribute("id", id);
         model.addAttribute("searchQuery", query);
         model.addAttribute("currentPage", page);
@@ -105,11 +119,19 @@ public class HomeController {
         return "detail-product";
     }
 
-
-
     @GetMapping("/nice-table")
     public String table() {
         return "/quixlab-master/widgets";
+    }
+
+    @GetMapping("/setting")
+    public String showSetting(Model model, HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        Map<ProductDTO, Integer> cartItems = cartService.getCartItems(customer);
+        double total = cartService.getCartTotal(customer);
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("total", total);
+        return "setting";
     }
 }
 

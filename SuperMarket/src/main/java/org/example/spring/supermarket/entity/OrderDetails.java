@@ -7,9 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +16,7 @@ import java.util.Set;
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_detailsId", nullable = false, columnDefinition = "int")
+    @Column(name = "orderd_id", nullable = false, columnDefinition = "int")
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
