@@ -18,4 +18,7 @@ public interface OrderService {
 
     void updateStatus(int id, String status);
     List<Order> findAll();
+
+    List<OrderDetails> getOrderDetails(int orderId);
+
 }

@@ -45,4 +45,15 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<Cart> cartItems;
+
+//    @Transient
+//    private int inventoryQuantity;
+//
+//    public int getInventoryQuantity() {
+//        return inventoryQuantity;
+//    }
+//
+//    public void setInventoryQuantity(int inventoryQuantity) {
+//        this.inventoryQuantity = inventoryQuantity;
+//    }
 }

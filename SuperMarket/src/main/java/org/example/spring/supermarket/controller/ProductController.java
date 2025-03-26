@@ -94,6 +94,8 @@ public class ProductController {
                 .orElse(null);
         if (category == null) {
             result.rejectValue("categoryId", "error.productDTO", "Danh mục không tồn tại!");
+            List<Categories> categories = categoriesRepository.findAll();
+            model.addAttribute("categories", categories);
             return "products/createProduct";
         }
 
@@ -137,15 +139,14 @@ public class ProductController {
 
         // Kiểm tra dữ liệu đầu vào của Inventory
         if (productDTO.getQuantity() != null && productDTO.getQuantity() >= 0 &&
-                productDTO.getPurchasePrice() != null && productDTO.getPurchasePrice().compareTo(BigDecimal.ZERO) >= 0)
-        {
+                productDTO.getPurchasePrice() != null && productDTO.getPurchasePrice().compareTo(BigDecimal.ZERO) >= 0) {
 
             // Tạo một Inventory mới để theo dõi số lượng sản phẩm
             Inventory inventory = new Inventory();
             inventory.setProduct(product);
             inventory.setQuantity(productDTO.getQuantity());
             inventory.setPurchaseDate(createAt);
-            inventory.setPurchasePrice(productDTO.getPrice());
+            inventory.setPurchasePrice(productDTO.getPurchasePrice());
             inventory.setLastUpdated(createAt);
 
             // Lưu Inventory vào cơ sở dữ liệu

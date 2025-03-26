@@ -140,7 +140,7 @@
                                 <td th:text="${order.id}"></td>
                                 <td th:text="'AL' + ${order.id}"></td>
                                 <td th:text="${#dates.format(order.createdAt, 'dd-MM-yyyy')}"></td>
-                                <td th:text="'Rp. ' + ${order.totalAmount}"></td>
+                                <td th:text="'VND: ' + ${order.totalAmount}"></td>
                                 <td th:text="${order.status}"></td>
                                 <td>
                                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal"

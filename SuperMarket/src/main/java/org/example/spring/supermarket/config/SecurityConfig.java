@@ -77,7 +77,7 @@ public class SecurityConfig {
                 boolean isStaff = authentication.getAuthorities().stream()
                         .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_STAFF"));
                 if (isStaff) {
-                    response.sendRedirect("/admin");
+                    response.sendRedirect("/nice-table");
                 } else {
                     response.sendRedirect("/");
                 }

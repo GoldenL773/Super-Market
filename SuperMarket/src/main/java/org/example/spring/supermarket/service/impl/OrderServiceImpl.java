@@ -111,4 +111,9 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
+    @Override
+    public List<OrderDetails> getOrderDetails(int orderId) {
+       return orderRepository.findOrderDetailsByOrderId(orderId);
+    }
+
 }

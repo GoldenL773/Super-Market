@@ -1,13 +1,17 @@
 package org.example.spring.supermarket.controller;
 
+import org.example.spring.supermarket.DTO.CategoryDTO;
 import org.example.spring.supermarket.entity.*;
 import org.example.spring.supermarket.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Controller
@@ -38,10 +42,19 @@ public class AdminController {
     @Autowired
     private PromotionService promotionService;
 
-    // Dashboard
-    @GetMapping("")
+    // Language: java
+    @GetMapping("/dashboard")
     public String dashboard(Model model) {
-        // Will add dashboard statistics when services are implemented
+        // Retrieve statistics from services
+        int categoryCount = categoryService.getAll().size();
+        int orderCount = orderService.findAll().size();
+        int customerCount = customerService.getAllCustomers().size();
+
+        // Add statistics to the model
+        model.addAttribute("categoryCount", categoryCount);
+        model.addAttribute("orderCount", orderCount);
+        model.addAttribute("customerCount", customerCount);
+
         return "admin/dashboard";
     }
 
@@ -49,7 +62,7 @@ public class AdminController {
     // Categories Management
     @GetMapping("/categories")
     public String listCategories(Model model) {
-        // model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("categories", categoryService.getAll());
         return "admin/categories/list";
     }
 
@@ -60,8 +73,8 @@ public class AdminController {
     }
 
     @PostMapping("/categories")
-    public String saveCategory(@ModelAttribute Categories category, RedirectAttributes redirectAttributes) {
-        // categoryService.save(category);
+    public String saveCategory(@ModelAttribute CategoryDTO categoryDTO, RedirectAttributes redirectAttributes) {
+        categoryService.save(categoryDTO);
         redirectAttributes.addFlashAttribute("message", "Category saved successfully!");
         return "redirect:/admin/categories";
     }
@@ -75,8 +88,8 @@ public class AdminController {
 
     @GetMapping("/orders/{id}")
     public String viewOrder(@PathVariable int id, Model model) {
-        // model.addAttribute("order", orderService.findById(id));
-        // model.addAttribute("orderDetails", orderService.getOrderDetails(id));
+        model.addAttribute("order", orderService.getOrderById(id));
+        model.addAttribute("orderDetails", orderService.getOrderDetails(id));
         return "admin/orders/details";
     }
 
@@ -87,24 +100,28 @@ public class AdminController {
         return "redirect:/admin/orders/" + id;
     }
 
-    // Customers Management
-    @GetMapping("/customers")
-    public String listCustomers(Model model) {
-        // model.addAttribute("customers", customerService.findAll());
-        return "admin/customers/list";
-    }
+//    // Customers Management
+//    @GetMapping("/customers")
+//    public String listCustomers(Pageable pageable, Model model) {
+//        Page<Customer> customers = customerService.getAllCustomers(pageable);
+//        model.addAttribute("customers", customers);
+//        return "admin/customers/list";
+//    }
 
+    // Language: java
     @GetMapping("/customers/{id}")
     public String viewCustomer(@PathVariable int id, Model model) {
-        // model.addAttribute("customer", customerService.findById(id));
-        // model.addAttribute("orders", orderService.findByCustomerId(id));
+        Customer customer = customerService.getCustomerById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+        model.addAttribute("customer", customer);
+        model.addAttribute("orders", orderService.getOrdersByCustomer(customer));
         return "admin/customers/details";
     }
 
     // Inventory Management
     @GetMapping("/inventory")
     public String listInventory(Model model) {
-        // model.addAttribute("inventory", inventoryService.findAll());
+         model.addAttribute("inventory", inventoryService.findAll());
         return "admin/inventory/list";
     }
 
@@ -118,50 +135,50 @@ public class AdminController {
 
     @PostMapping("/inventory")
     public String saveInventory(@ModelAttribute StockEntry stockEntry, RedirectAttributes redirectAttributes) {
-        // inventoryService.save(stockEntry);
+//         inventoryService.save(stockEntry);
         redirectAttributes.addFlashAttribute("message", "Inventory updated successfully!");
         return "redirect:/admin/inventory";
     }
-
-    // Staff Management
-    @GetMapping("/staff")
-    public String listStaff(Model model) {
-        // model.addAttribute("staffList", staffService.findAll());
-        return "admin/staff/list";
-    }
-
-    @GetMapping("/staff/new")
-    public String newStaffForm(Model model) {
-        model.addAttribute("staff", new Staff());
-        return "admin/staff/form";
-    }
-
-    @PostMapping("/staff")
-    public String saveStaff(@ModelAttribute Staff staff, RedirectAttributes redirectAttributes) {
-        // staffService.save(staff);
-        redirectAttributes.addFlashAttribute("message", "Staff saved successfully!");
-        return "redirect:/admin/staff";
-    }
-
-    // Suppliers Management
-    @GetMapping("/suppliers")
-    public String listSuppliers(Model model) {
-        // model.addAttribute("suppliers", supplierService.findAll());
-        return "admin/suppliers/list";
-    }
-
-    @GetMapping("/suppliers/new")
-    public String newSupplierForm(Model model) {
-        model.addAttribute("supplier", new Supplier());
-        return "admin/suppliers/form";
-    }
-
-    @PostMapping("/suppliers")
-    public String saveSupplier(@ModelAttribute Supplier supplier, RedirectAttributes redirectAttributes) {
-        // supplierService.save(supplier);
-        redirectAttributes.addFlashAttribute("message", "Supplier saved successfully!");
-        return "redirect:/admin/suppliers";
-    }
+//
+//    // Staff Management
+//    @GetMapping("/staff")
+//    public String listStaff(Model model) {
+//        // model.addAttribute("staffList", staffService.findAll());
+//        return "admin/staff/list";
+//    }
+//
+//    @GetMapping("/staff/new")
+//    public String newStaffForm(Model model) {
+//        model.addAttribute("staff", new Staff());
+//        return "admin/staff/form";
+//    }
+//
+//    @PostMapping("/staff")
+//    public String saveStaff(@ModelAttribute Staff staff, RedirectAttributes redirectAttributes) {
+//        // staffService.save(staff);
+//        redirectAttributes.addFlashAttribute("message", "Staff saved successfully!");
+//        return "redirect:/admin/staff";
+//    }
+//
+//    // Suppliers Management
+//    @GetMapping("/suppliers")
+//    public String listSuppliers(Model model) {
+//        // model.addAttribute("suppliers", supplierService.findAll());
+//        return "admin/suppliers/list";
+//    }
+//
+//    @GetMapping("/suppliers/new")
+//    public String newSupplierForm(Model model) {
+//        model.addAttribute("supplier", new Supplier());
+//        return "admin/suppliers/form";
+//    }
+//
+//    @PostMapping("/suppliers")
+//    public String saveSupplier(@ModelAttribute Supplier supplier, RedirectAttributes redirectAttributes) {
+//        // supplierService.save(supplier);
+//        redirectAttributes.addFlashAttribute("message", "Supplier saved successfully!");
+//        return "redirect:/admin/suppliers";
+//    }
 
     // Promotions Management
     @GetMapping("/promotions")

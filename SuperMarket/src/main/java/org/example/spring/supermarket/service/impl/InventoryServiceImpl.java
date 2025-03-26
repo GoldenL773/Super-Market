@@ -1,17 +1,27 @@
 package org.example.spring.supermarket.service.impl;
 
 import org.example.spring.supermarket.entity.Inventory;
+import org.example.spring.supermarket.entity.StockEntry;
 import org.example.spring.supermarket.repository.InventoryRepository;
+import org.example.spring.supermarket.repository.StockEntryRepository;
 import org.example.spring.supermarket.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
+    @Autowired
+    private StockEntryRepository stockEntryRepository;
+
+    @Override
+    public List<StockEntry> findAll() {
+        return stockEntryRepository.findAll();
+    }
 
     private InventoryRepository inventoryRepository;
     @Autowired
