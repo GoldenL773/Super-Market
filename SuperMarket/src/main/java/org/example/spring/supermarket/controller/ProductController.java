@@ -160,24 +160,34 @@ public class ProductController {
     }
 
 
-    @GetMapping("/delete")
-    public String deleteProduct(@RequestParam int id) {
-        try{
-            Product product = productRepository.findById(id).get();
-            //delete image
-            Path path = Paths.get("src/main/resources/static/images/" + product.getImage());
-            try{
-                Files.delete(path);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        try {
+            // Tìm sản phẩm theo id
+            Product product = productRepository.findById(id).orElse(null);
+            if (product != null) {
+                // Xóa tất cả inventory liên quan đến product trước
+                inventoryRepository.deleteByProductId(id);
+
+                // Xóa hình ảnh nếu có
+                if (product.getImage() != null) {
+                    Path path = Paths.get("uploads/" + product.getImage());
+                    try {
+                        Files.deleteIfExists(path);
+                    } catch (IOException e) {
+                        System.out.println("Không thể xóa ảnh: " + e.getMessage());
+                    }
+                }
+
+                // Xóa sản phẩm
+                productRepository.delete(product);
             }
-            //delete
-            productRepository.delete(product);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Lỗi khi xóa sản phẩm: " + e.getMessage());
         }
         return "redirect:/products/list";
     }
+
 
     @GetMapping("/detail/{id}")
     public String viewProduct(@PathVariable("id") int id, Model model) {

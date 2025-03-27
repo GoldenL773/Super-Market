@@ -28,4 +28,8 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
         List<Inventory> findByProduct(Product product);
 //        Optional<Inventory> findByProductId(int productId);
+@Modifying
+@Transactional
+@Query("DELETE FROM Inventory i WHERE i.product.id = :productId")
+void deleteByProductId(@Param("productId") int productId);
 }
