@@ -4,10 +4,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.example.spring.supermarket.validation.PasswordMatches;
 
 /**
  * Data Transfer Object for user registration and profile updates
  */
+@PasswordMatches
 public class UserDTO {
 
     private Integer id;

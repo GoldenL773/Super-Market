@@ -77,7 +77,7 @@
                                             <div class="media-body">
                                                 <h5 th:text="${entry.key.name}">Product</h5>
                                                 <p class="price">
-                                                    <span th:text="'Rp. ' + ${entry.key.price}">Rp. 0</span>
+                                                    <span th:text="'VND. ' + ${entry.key.price}">VND. 0</span>
                                                 </p>
                                                 <p class="text-muted" th:text="'Qty: ' + ${entry.value}">Qty: 0</p>
                                             </div>
@@ -88,7 +88,7 @@
                                     <div class="drop-title d-flex justify-content-between">
                                         <span>Total:</span>
                                         <span class="text-primary"><strong
-                                                th:text="'Rp. ' + ${total}">Rp. 0</strong></span>
+                                                th:text="'VND. ' + ${total}">VND. 0</strong></span>
                                     </div>
                                 </li>
                                 <li class="d-flex justify-content-between pl-3 pr-3 pt-3">
@@ -109,6 +109,7 @@
         <div class="jumbotron jumbotron-bg text-center rounded-0"
              style="background-image: url('/assets/img/bg-header.jpg');">
             <div class="container">
+                <h1 class="pt-5">
                 <h1 class="pt-5">
                     Your Transactions
                 </h1>
@@ -190,12 +191,7 @@
                             </p>
                         </div>
                         <div class="col-md-6">
-                            <p>
-                                <strong>Payment Method:</strong><br>
-                                Direct Transfer to<br>
-                                Bank: BCA<br>
-                                No Rek.: 72133236179
-                            </p>
+
                             <p>
                                 <strong>Order Date</strong><br>
                                 <span th:text="${#dates.format(order.createdAt, 'dd-MM-yyyy HH:mm')}"></span>
@@ -220,7 +216,7 @@
                                     <tr th:each="entry : ${orderDetailsMap.get(order)}">
                                         <td th:text="${entry.key.name} + ' x' + ${entry.value}"></td>
                                         <td class="text-right"
-                                            th:text="'Rp. ' + ${entry.key.price * entry.value}"></td>
+                                            th:text="'VND. ' + ${entry.key.price * entry.value}"></td>
                                     </tr>
                                     </tbody>
                                     <tfooter>
@@ -229,7 +225,7 @@
                                                 <strong>Cart Subtotal</strong>
                                             </td>
                                             <td class="text-right"
-                                                th:text="'Rp. ' + ${order.totalAmount}"></td>
+                                                th:text="'VND. ' + ${order.totalAmount}"></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -244,7 +240,7 @@
                                                 <strong>ORDER TOTAL</strong>
                                             </td>
                                             <td class="text-right"
-                                                th:text="'Rp. ' + ${order.totalAmount + 20000}">
+                                                th:text="' VND. ' + ${order.totalAmount + 20000}">
                                                 <strong>Rp 200.000</strong>
                                             </td>
                                         </tr>

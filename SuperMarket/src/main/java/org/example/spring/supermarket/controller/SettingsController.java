@@ -27,7 +27,7 @@ public class SettingsController {
         this.userService = userService;
     }
 
-    @GetMapping("/settings")
+    @GetMapping("/settingsss")
     public String showSettingsPage(Model model) {
         // Get the Authentication object from SecurityContextHolder
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,7 +64,7 @@ public class SettingsController {
         return "setting"; // Note: Should be "settings" to match your template name
     }
 
-    @PostMapping("/settings")
+    @PostMapping("/settingsss")
     public String updateSettings(@Valid @ModelAttribute("userSettings") UserSettingsDto userSettings,
                                  BindingResult result,
                                  RedirectAttributes redirectAttributes) {
@@ -88,6 +88,6 @@ public class SettingsController {
             redirectAttributes.addFlashAttribute("error", "You must be logged in to update your profile.");
         }
 
-        return "redirect:/settings";
+        return "redirect:/settingsss";
     }
 }

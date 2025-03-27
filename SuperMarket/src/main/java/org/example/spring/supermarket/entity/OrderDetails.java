@@ -1,6 +1,5 @@
 package org.example.spring.supermarket.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,11 +11,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Order_details")
+@Table(name = "order_details")
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orderd_id", nullable = false, columnDefinition = "int")
+    @Column(name = "order_details_id", nullable = false, columnDefinition = "int")
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)

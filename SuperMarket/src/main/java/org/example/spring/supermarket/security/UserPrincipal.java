@@ -1,5 +1,6 @@
 package org.example.spring.supermarket.security;
 
+import org.example.spring.supermarket.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,9 @@ public class UserPrincipal implements UserDetails {
         this.password = password;
         this.role = role;
         this.isCustomer = isCustomer;
+    }
+
+    public UserPrincipal(User user) {
     }
 
     @Override

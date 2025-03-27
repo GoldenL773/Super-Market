@@ -1,0 +1,126 @@
+/* src/main/resources/static/assets/css/style.css */
+
+/* General styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    font-size: 2em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.orders-list-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.orders-table th, .orders-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.orders-table th {
+    background-color: #f1f1f1;
+    font-weight: 600;
+}
+
+.orders-table .price {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.875em;
+}
+
+.status-badge.pending {
+    background-color: #ffc107;
+}
+
+.status-badge.processing {
+    background-color: #17a2b8;
+}
+
+.status-badge.completed {
+    background-color: #28a745;
+}
+
+.status-badge.canceled {
+    background-color: #dc3545;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 10px;
+}
+
+.action-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.875em;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+.status-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-select {
+    padding: 5px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.875em;
+}
+
+.update-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background-color: #0056b3;
+}

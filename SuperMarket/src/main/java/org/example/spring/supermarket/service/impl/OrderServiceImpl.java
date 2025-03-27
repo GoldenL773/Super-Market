@@ -96,15 +96,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    @Override
-    public void updateStatus(int id, String status) {
-        Optional<Order> orderOpt = orderRepository.findById(id);
-        if (orderOpt.isPresent()) {
-            Order order = orderOpt.get();
-            order.setStatus(status);
-            orderRepository.save(order);
-        }
-    }
+
 
     @Override
     public List<Order> findAll() {
@@ -114,6 +106,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDetails> getOrderDetails(int orderId) {
        return orderRepository.findOrderDetailsByOrderId(orderId);
+    }
+
+    @Override
+    public void updateStatus(int id, String status) {
+        // Define the allowed status values
+        List<String> allowedStatuses = Arrays.asList("Pending", "Shipped", "Delivered", "Cancelled");
+
+        // Check if the provided status is valid
+        if (!allowedStatuses.contains(status)) {
+            throw new IllegalArgumentException("Invalid status value: " + status);
+        }
+
+        // Proceed with updating the status
+        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(status);
+        orderRepository.save(order);
     }
 
 }

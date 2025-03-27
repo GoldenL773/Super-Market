@@ -130,7 +130,7 @@ public class HomeController {
         return "detail-product";
     }
 
-    @GetMapping("/nice-table")
+    @GetMapping("/dashboard")
     public String table() {
         return "/quixlab-master/widgets";
     }

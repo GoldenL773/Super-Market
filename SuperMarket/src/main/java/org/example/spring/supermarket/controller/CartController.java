@@ -50,6 +50,7 @@ public class CartController {
 
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this feature");
             return "redirect:/login";
         }
         if (quantity <= 0) {
@@ -83,6 +84,7 @@ public class CartController {
 
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this feature");
             return "redirect:/login";
         }
         if (quantity < 0) {
@@ -115,6 +117,7 @@ public class CartController {
 
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this feature");
             return "redirect:/login";
         }
         Product product = new Product();
@@ -128,6 +131,7 @@ public class CartController {
     public String clearCart(HttpSession session, RedirectAttributes redirectAttributes) {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this feature");
             return "redirect:/login";
         }
         cartService.clearCart(customer);
@@ -136,9 +140,10 @@ public class CartController {
     }
 
     @GetMapping("/checkout")
-    public String checkoutForm(Model model, HttpSession session) {
+    public String checkoutForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this feature");
             return "redirect:/login";
         }
         Map<ProductDTO, Integer> cartItems = cartService.getCartItems(customer);
@@ -159,6 +164,7 @@ public class CartController {
     public String processCheckout(HttpSession session, RedirectAttributes redirectAttributes) {
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "You need to log in to access this feature");
             return "redirect:/login";
         }
         Order order = cartService.checkout(customer);

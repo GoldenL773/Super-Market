@@ -123,7 +123,7 @@
                                             <div class="media-body">
                                                 <h5 th:text="${entry.key.name}">Product</h5>
                                                 <p class="price">
-                                                    <span th:text="'Rp. ' + ${entry.key.price}">Rp. 0</span>
+                                                    <span th:text="'VND. ' + ${entry.key.price}">VND. 0</span>
                                                 </p>
                                                 <p class="text-muted" th:text="'Qty: ' + ${entry.value}">Qty: 0</p>
                                             </div>
@@ -134,7 +134,7 @@
                                     <div class="drop-title d-flex justify-content-between">
                                         <span>Total:</span>
                                         <span class="text-primary"><strong
-                                                th:text="'Rp. ' + ${total}">Rp. 0</strong></span>
+                                                th:text="'VND. ' + ${total}">VND. 0</strong></span>
                                     </div>
                                 </li>
                                 <li class="d-flex justify-content-between pl-3 pr-3 pt-3">
