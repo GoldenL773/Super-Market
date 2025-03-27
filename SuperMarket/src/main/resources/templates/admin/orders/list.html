@@ -1,26 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Orders List</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/order.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-<div class="container">
-    <header class="page-header">
-        <h1>Orders List</h1>
-    </header>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <div class="orders-list-card">
-        <div class="table-responsive">
-            <table class="orders-table">
-                <thead>
+<head>
+    <meta charset="UTF-8">
+    <title>Orders List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Quixlab Admin Template -->
+    <base href="/admin/"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Custom order table style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/order.css">
+</head>
+
+<body>
+<div id="main-wrapper">
+
+    <!-- Header Fragment -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <!-- Sidebar Fragment -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="content-body">
+        <div class="container-fluid mt-4">
+            <h2>Danh sách đơn hàng</h2>
+
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
                 <tr>
                     <th>No</th>
                     <th>Customer</th>
@@ -30,89 +45,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="order : ${orders ?: {}}">
-                    <td th:text="${order?.id ?: '12345'}">12345</td>
-                    <td th:text="${order?.customer?.fullName ?: 'John Doe'}">John Doe</td>
-                    <td class="price" th:text="${order?.totalAmount ?: '$129.99'}">$129.99</td>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}">1</td>
+                    <td th:text="${order.customer.fullName}">Nguyen Van A</td>
+                    <td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                    <td th:class="'status-' + ${order.status.toLowerCase()}" th:text="${order.status}">Pending</td>
                     <td>
-                        <span th:class="${'status-badge ' + (order?.status?.toLowerCase() ?: 'completed')}"
-                              th:text="${order?.status ?: 'Completed'}">Completed</span>
-                    </td>
-                    <td class="actions-cell">
-                        <a th:href="@{/admin/orders/{id}(id=${order?.id ?: '12345'})}" class="action-link view-link">
-                            <i class="fas fa-eye"></i> View
-                        </a>
-                        <form th:action="@{/admin/orders/{id}/status(id=${order?.id ?: '12345'})}" method="post" class="status-form">
-                            <div class="form-group">
-                                <select name="status" class="status-select">
-                                    <option value="Pending" th:selected="${order?.status == 'Pending'}">Pending</option>
-                                    <option value="Processing" th:selected="${order?.status == 'Processing'}">Processing</option>
-                                    <option value="Completed" th:selected="${order?.status == 'Completed'}" selected>Completed</option>
-                                    <option value="Canceled" th:selected="${order?.status == 'Canceled'}">Canceled</option>
-                                </select>
-                                <button type="submit" class="update-button">Update</button>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-                <!-- Sample data for preview -->
-                <tr th:if="${orders == null or #lists.isEmpty(orders)}">
-                    <td>12345</td>
-                    <td>John Doe</td>
-                    <td class="price">$129.99</td>
-                    <td><span class="status-badge completed">Completed</span></td>
-                    <td class="actions-cell">
-                        <a href="#" class="action-link view-link"><i class="fas fa-eye"></i> View</a>
-                        <form class="status-form">
-                            <div class="form-group">
-                                <select class="status-select">
-                                    <option>Pending</option>
-                                    <option>Processing</option>
-                                    <option selected>Completed</option>
-                                    <option>Canceled</option>
-                                </select>
-                                <button type="submit" class="update-button">Update</button>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-                <tr th:if="${orders == null or #lists.isEmpty(orders)}">
-                    <td>12346</td>
-                    <td>Jane Smith</td>
-                    <td class="price">$75.50</td>
-                    <td><span class="status-badge pending">Pending</span></td>
-                    <td class="actions-cell">
-                        <a href="#" class="action-link view-link"><i class="fas fa-eye"></i> View</a>
-                        <form class="status-form">
-                            <div class="form-group">
-                                <select class="status-select">
-                                    <option selected>Pending</option>
-                                    <option>Processing</option>
-                                    <option>Completed</option>
-                                    <option>Canceled</option>
-                                </select>
-                                <button type="submit" class="update-button">Update</button>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-                <tr th:if="${orders == null or #lists.isEmpty(orders)}">
-                    <td>12347</td>
-                    <td>Robert Johnson</td>
-                    <td class="price">$249.99</td>
-                    <td><span class="status-badge processing">Processing</span></td>
-                    <td class="actions-cell">
-                        <a href="#" class="action-link view-link"><i class="fas fa-eye"></i> View</a>
-                        <form class="status-form">
-                            <div class="form-group">
-                                <select class="status-select">
-                                    <option>Pending</option>
-                                    <option selected>Processing</option>
-                                    <option>Completed</option>
-                                    <option>Canceled</option>
-                                </select>
-                                <button type="submit" class="update-button">Update</button>
-                            </div>
+                        <a class="btn btn-sm btn-info" th:href="@{/admin/orders/{id}(id=${order.id})}">View</a>
+                        <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post" style="display:inline;">
+                            <select name="status" class="form-control form-control-sm d-inline w-auto">
+                                <option value="Pending" th:selected="${order.status == 'Pending'}">Pending</option>
+                                <option value="Shipped" th:selected="${order.status == 'Shipped'}">Shipped</option>
+                                <option value="Delivered" th:selected="${order.status == 'Delivered'}">Delivered</option>
+                                <option value="Cancelled" th:selected="${order.status == 'Cancelled'}">Cancelled</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
                         </form>
                     </td>
                 </tr>
@@ -120,6 +67,23 @@
             </table>
         </div>
     </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+        </div>
+    </div>
+
 </div>
+
+<!-- Scripts -->
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/gleek.js"></script>
+<script src="js/styleSwitcher.js"></script>
+<script src="js/dashboard/dashboard-2.js"></script>
+
 </body>
 </html>

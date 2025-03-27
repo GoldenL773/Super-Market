@@ -13,17 +13,21 @@
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             background-color: #fff;
         }
+
         h2 {
             text-align: center;
         }
+
         img {
             max-width: 100%;
             height: auto;
             margin-top: 10px;
         }
+
         .info {
             margin: 10px 0;
         }
+
         .btn {
             display: inline-block;
             padding: 10px 15px;
@@ -35,22 +39,120 @@
             display: block;
             text-align: center;
         }
+
         .btn:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>Chi tiết sản phẩm</h2>
-    <p><strong>Tên sản phẩm:</strong> <span th:text="${product.name}"></span></p>
-    <p><strong>Giá:</strong> <span th:text="${product.price}"></span> VND</p>
-    <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
-    <p><strong>Danh mục:</strong> <span th:text="${product.category.name}"></span></p>
-    <p><strong>Số lượng tồn kho:</strong> <span th:text="${productQuantity}"></span></p>
-    <p><strong>Hình ảnh:</strong></p>
-    <img th:src="@{${product.image}}" alt="Hình ảnh sản phẩm">
-    <a href="/products" class="btn">Quay lại danh sách</a>
+
+<div id="main-wrapper">
+
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="index.html">
+                <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
+                <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+                <span class="brand-title">
+                        <img src="images/logo-text.png" alt="">
+                    </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header-content clearfix">
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="toggle-icon"><i class="icon-menu"></i></span>
+                </div>
+            </div>
+            <div class="header-left">
+                <div class="input-group icons">
+
+
+                </div>
+            </div>
+            <div class="header-right">
+                <ul class="clearfix">
+
+
+                    <li class="icons dropdown">
+                        <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                            <span class="activity active"></span>
+                            <img src="images/user/1.png" height="40" width="40" alt="">
+                        </div>
+                        <div class="drop-down dropdown-profile   dropdown-menu">
+                            <div class="dropdown-content-body">
+                                <ul>
+                                    <li>
+                                        <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span>
+                                            <div class="badge gradient-3 badge-pill badge-primary">3</div>
+                                        </a>
+                                    </li>
+
+                                    <hr class="my-2">
+                                    <li>
+                                        <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
+                                    </li>
+                                    <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="nk-sidebar">
+        <div class="nk-nav-scroll">
+            <ul class="metismenu" id="menu">
+                <li>
+
+                    <a href="/dashboard" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-label">Features</li>
+
+                <li>
+
+                    <a href="/products/list" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+
+                    <a href="/admin/orders" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">Xử Lí Đơn Hàng</span>
+                    </a>
+
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="content-body">
+
+        <div class="container">
+            <h2>Chi tiết sản phẩm</h2>
+            <p><strong>Tên sản phẩm:</strong> <span th:text="${product.name}"></span></p>
+            <p><strong>Giá:</strong> <span th:text="${product.price}"></span> VND</p>
+            <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
+            <p><strong>Danh mục:</strong> <span th:text="${product.category.name}"></span></p>
+            <p><strong>Số lượng tồn kho:</strong> <span th:text="${productQuantity}"></span></p>
+            <p><strong>Hình ảnh:</strong></p>
+            <img th:src="@{${product.image}}" alt="Hình ảnh sản phẩm">
+            <a href="/products" class="btn">Quay lại danh sách</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

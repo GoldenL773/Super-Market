@@ -1,10 +1,15 @@
 package org.example.spring.supermarket.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Data
+@AllArgsConstructor
 @Table(name = "Customer")
 public class Customer {
 
@@ -55,6 +60,8 @@ public class Customer {
         this.gender = gender;
         this.createdAt = LocalDateTime.now();
     }
+
+
 
     // Getters and Setters
     public Integer getCustomerId() {

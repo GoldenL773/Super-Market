@@ -1,126 +1,115 @@
-/* src/main/resources/static/assets/css/style.css */
+/* General styles for the body */
 
-/* General styles */
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
-}
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Center and style the heading */
+h1 {
+    text-align: center;
     margin-bottom: 20px;
-}
-
-.page-header h1 {
     font-size: 2em;
-    font-weight: 600;
-    margin: 0;
 }
 
-.orders-list-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+/* Make the table responsive with a container */
+.table-container {
+    overflow-x: auto; /* Horizontal scroll on small screens */
 }
 
-.table-responsive {
-    overflow-x: auto;
-}
-
-.orders-table {
+/* Style the table */
+table {
     width: 100%;
+    max-width: 1000px; /* Limit width for large screens */
+    margin: 0 auto; /* Center the table */
     border-collapse: collapse;
-    margin-bottom: 20px;
+    border: 1px solid #ddd; /* Subtle border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Card-like shadow */
 }
 
-.orders-table th, .orders-table td {
-    padding: 12px 15px;
+/* Style table headers and cells */
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2; /* Light gray for headers */
+    font-weight: bold;
     text-align: left;
-    border-bottom: 1px solid #dee2e6;
 }
 
-.orders-table th {
-    background-color: #f1f1f1;
-    font-weight: 600;
+/* Alternate row colors for readability */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-.orders-table .price {
-    color: #28a745;
-    font-weight: 600;
+/* Hover effect for rows */
+tr:hover {
+    background-color: #e9ecef;
 }
 
-.status-badge {
+/* Align total amount to the right */
+td:nth-child(3) {
+    text-align: right;
+}
+
+/* Prevent wrapping in the actions column */
+td:nth-child(5) {
+    white-space: nowrap;
+}
+
+/* Status indicators using pseudo-elements */
+td.status-pending::before {
+    content: '';
     display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ffc107; /* Yellow for Pending */
+    margin-right: 5px;
+}
+
+td.status-shipped::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #007bff; /* Blue for Shipped */
+    margin-right: 5px;
+}
+
+td.status-delivered::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #28a745; /* Green for Delivered */
+    margin-right: 5px;
+}
+
+td.status-cancelled::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #dc3545; /* Red for Cancelled */
+    margin-right: 5px;
+}
+
+/* Style the "View" link as a button */
+
+
+/* Style the select dropdown */
+select {
     padding: 5px 10px;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 0.875em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 5px; /* Space between select and button */
 }
 
-.status-badge.pending {
-    background-color: #ffc107;
-}
+/* Style the update button */
 
-.status-badge.processing {
-    background-color: #17a2b8;
-}
 
-.status-badge.completed {
-    background-color: #28a745;
-}
-
-.status-badge.canceled {
-    background-color: #dc3545;
-}
-
-.actions-cell {
-    display: flex;
-    gap: 10px;
-}
-
-.action-link {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 0.875em;
-}
-
-.action-link:hover {
-    text-decoration: underline;
-}
-
-.status-form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.status-select {
-    padding: 5px 10px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 0.875em;
-}
-
-.update-button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.update-button:hover {
-    background-color: #0056b3;
+button:hover {
+    background-color: #218838; /* Darker green on hover */
 }

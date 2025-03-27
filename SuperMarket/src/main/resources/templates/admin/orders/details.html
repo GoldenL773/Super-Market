@@ -1,70 +1,99 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Order Details</title>
     <meta charset="UTF-8">
+    <title>Order Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Admin Layout CSS -->
+    <base href="/admin/"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Page-specific CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 </head>
 
 <body>
+<div id="main-wrapper">
 
-<div class="container">
-    <header class="page-header">
-        <h1>Order Details</h1>
-        <a th:href="@{/admin/orders}" class="back-button">
-            <i class="fas fa-arrow-left"></i> Back to Orders List
-        </a>
-    </header>
+    <!-- Header -->
+    <div th:replace="fragments/header :: header"></div>
 
-    <div class="order-summary-card">
-        <div class="order-header">
-            <div class="order-id">
-                <h2>Order #<span th:text="${order.id}"></span></h2>
-                <span th:class="${'status-badge ' + order.status.toLowerCase()}" th:text="${order.status}"></span>
-            </div>
-            <div class="order-date">
-                <i class="far fa-calendar-alt"></i>
-                <span th:text="${#dates.format(order.createdAt, 'dd MMM yyyy, HH:mm')}"></span>
-            </div>
-        </div>
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
 
-        <div class="order-info">
-            <div class="info-group">
-                <label>Customer</label>
-                <p class="info-value" th:text="${order.customer.fullName}"></p>
+    <!-- Main Content -->
+    <div class="content-body">
+        <div class="container mt-4">
+
+            <header class="page-header mb-4">
+                <h2>Order Details</h2>
+                <a th:href="@{/admin/orders}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Orders List
+                </a>
+            </header>
+
+            <div class="order-summary-card mb-4">
+                <div class="order-header d-flex justify-content-between align-items-center">
+                    <div class="order-id">
+                        <h4>Order #<span th:text="${order.id}">1</span></h4>
+                        <span th:class="'status-badge ' + ${order.status.toLowerCase()}" th:text="${order.status}">Pending</span>
+                    </div>
+                    <div class="order-date text-muted">
+                        <i class="far fa-calendar-alt"></i>
+                        <span th:text="${#dates.format(order.createdAt, 'dd MMM yyyy, HH:mm')}"></span>
+                    </div>
+                </div>
+
+                <div class="order-info row mt-3">
+                    <div class="col-md-6 info-group">
+                        <label>Customer</label>
+                        <p class="info-value" th:text="${order.customer.fullName}">Nguyen Van A</p>
+                    </div>
+                    <div class="col-md-6 info-group">
+                        <label>Total Amount</label>
+                        <td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                    </div>
+                </div>
             </div>
-            <div class="info-group">
-                <label>Total Amount</label>
-                <p class="info-value price" th:text="${order.totalAmount}"></p>
+
+            <div class="order-details-card">
+                <h4>Order Items</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered order-items-table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="detail : ${orderDetails}">
+                            <td th:text="${detail.product.name}">Product A</td>
+                            <td th:text="${detail.quantity}">2</td>
+                            <td class="price" th:text="${detail.price} + ' VND'">200000</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
     </div>
 
-    <div class="order-details-card">
-        <h3>Order Items</h3>
-        <div class="table-responsive">
-            <table class="order-items-table">
-                <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="detail : ${orderDetails}">
-                    <td th:text="${detail.product.name}"></td>
-                    <td th:text="${detail.quantity}"></td>
-                    <td class="price" th:text="${detail.price}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
 </body>
+
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/gleek.js"></script>
+<script src="js/styleSwitcher.js"></script>
+<script src="js/dashboard/dashboard-2.js"></script>
+<script src="js/dashboard/dashboard-2.js"></script>
 
 </html>

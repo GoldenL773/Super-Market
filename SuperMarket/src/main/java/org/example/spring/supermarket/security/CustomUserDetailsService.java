@@ -32,26 +32,28 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (username.startsWith("customer:")) {
             username = username.substring("customer:".length());
+
+
+            Optional<Customer> customer = customerRepository.findByUsername(username);
+            if (customer.isPresent()) {
+                return new org.springframework.security.core.userdetails.User(
+                        customer.get().getUsername(),
+                        customer.get().getPassword(),
+                        Collections.singletonList(new SimpleGrantedAuthority(customer.get().getRole().getRoleName()))
+                );
+            }
         }
 
         if (username.startsWith("staff:")) {
             username = username.substring("staff:".length());
-        }
-        Optional<Customer> customer = customerRepository.findByUsername(username);
-        if (customer.isPresent()) {
-            return new org.springframework.security.core.userdetails.User(
-                    customer.get().getUsername(),
-                    customer.get().getPassword(),
-                    Collections.singletonList(new SimpleGrantedAuthority(customer.get().getRole().getRoleName()))
-            );
-        }
-        Optional<Staff> staff = staffRepository.findByUsername(username);
-        if (staff.isPresent()) {
-            return new org.springframework.security.core.userdetails.User(
-                    staff.get().getUsername(),
-                    staff.get().getPassword(),
-                    Collections.singletonList(new SimpleGrantedAuthority(staff.get().getRole().getRoleName()))
-            );
+            Optional<Staff> staff = staffRepository.findByUsername(username);
+            if (staff.isPresent()) {
+                return new org.springframework.security.core.userdetails.User(
+                        staff.get().getUsername(),
+                        staff.get().getPassword(),
+                        Collections.singletonList(new SimpleGrantedAuthority(staff.get().getRole().getRoleName()))
+                );
+            }
         }
         throw new UsernameNotFoundException("User not found: " + username);
     }

@@ -1,5 +1,6 @@
 package org.example.spring.supermarket.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.spring.supermarket.DTO.CategoryDTO;
 import org.example.spring.supermarket.entity.*;
 import org.example.spring.supermarket.service.*;
@@ -7,13 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.print.Pageable;
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -38,6 +45,9 @@ public class AdminController {
     private StaffService staffService;
 
     @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
     private SupplierService supplierService;
 
     @Autowired
@@ -45,19 +55,37 @@ public class AdminController {
 
     // Language: java
     @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        // Retrieve statistics from services
+    public String dashboard(Model model, HttpSession session) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+
+        Optional<Staff> staffOpt = staffService.getStaffByUsername(user.getUsername());
+
+        if (staffOpt.isPresent()) {
+            Staff staff = staffOpt.get();
+            session.setAttribute("staff", staff);
+            model.addAttribute("staff", staff);
+        } else {
+            return "redirect:/admin/login";
+        }
+
+        // Thống kê tổng số
         int categoryCount = categoryService.getAll().size();
         int orderCount = orderService.findAll().size();
         int customerCount = customerService.getAllCustomers().size();
-
-        // Add statistics to the model
         model.addAttribute("categoryCount", categoryCount);
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("customerCount", customerCount);
 
+        // Thống kê thu nhập theo tháng (trừ Pending & Cancelled)
+        Map<String, BigDecimal> monthlyIncome = orderService.getMonthlyIncome();
+        model.addAttribute("monthlyIncome", monthlyIncome);
+
         return "admin/dashboard";
     }
+
+
 
 
     // Categories Management
@@ -103,23 +131,38 @@ public class AdminController {
         return "redirect:/admin/orders/" + id;
     }
 
-    // Customers Management
+
+
     @GetMapping("/customers")
-    public String listCustomers(Pageable pageable, Model model) {
-        Page<Customer> customers = customerService.getAllCustomers((org.springframework.data.domain.Pageable) pageable);
+    public String listCustomers(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "admin/customers/list";
+        return "admin/customers"; // Name of the template that will show customer list
     }
 
     // Language: java
     @GetMapping("/customers/{id}")
-    public String viewCustomer(@PathVariable int id, Model model) {
-        Customer customer = customerService.getCustomerById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
-        model.addAttribute("customer", customer);
-        model.addAttribute("orders", orderService.getOrdersByCustomer(customer));
-        return "admin/customers/details";
+    public String customerDetail(@PathVariable int id, Model model) {
+        Optional<Customer> customerOpt = customerService.getCustomerById(id);
+
+        if (customerOpt.isPresent()) {
+            Customer customer = customerOpt.get();
+            int totalOrders = orderService.countByCustomer(Optional.of(customer));
+            int distinctProducts = orderDetailService.countDistinctProductsByCustomer(customer);
+            BigDecimal totalSpent = orderService.calculateTotalSpentByCustomer(customer);
+
+            model.addAttribute("customer", customer);
+            model.addAttribute("totalOrders", totalOrders);
+            model.addAttribute("distinctProducts", distinctProducts);
+            model.addAttribute("totalSpent", totalSpent);
+        } else {
+            // Handle the case where the customer is not found
+            model.addAttribute("error", "Customer not found");
+        }
+
+        return "admin/customer_details";
     }
+
 
     // Inventory Management
     @GetMapping("/inventory")
@@ -177,4 +220,9 @@ public class AdminController {
         // model.addAttribute("inventoryData", inventoryService.getInventoryReportData());
         return "admin/reports/inventory";
     }
+
+
+
+
+
 }

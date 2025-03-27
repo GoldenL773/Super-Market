@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <base href="/admin/"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div id="main-wrapper">
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div class="content-body">
+        <div class="container-fluid mt-4">
+            <h2>Thống kê</h2>
+            <div class="row">
+<!--                <div class="col-md-4">-->
+<!--                    <div class="card p-3">-->
+<!--                        <h5>Danh mục</h5>-->
+<!--                        <p class="display-4" th:text="${categoryCount}">0</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5>Đơn hàng</h5>
+                        <p class="display-4" th:text="${orderCount}">0</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5>Khách hàng</h5>
+                        <p class="display-4" th:text="${customerCount}">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4 p-4">
+                <h4>Thu nhập theo tháng</h4>
+                <canvas id="incomeChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="copyright">
+            <p>&copy; Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a></p>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const incomeLabels = /*[[${monthlyIncome.keySet()}]]*/ [];
+    const incomeData = /*[[${monthlyIncome.values()}]]*/ [];
+
+    const ctx = document.getElementById('incomeChart').getContext('2d');
+    const incomeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: incomeLabels,
+            datasets: [{
+                label: 'Thu nhập (VND)',
+                data: incomeData,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: value => value.toLocaleString() + ' VND'
+                    }
+                }
+            }
+        }
+    });
+    /*]]>*/
+</script>
+
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/gleek.js"></script>
+<script src="js/styleSwitcher.js"></script>
+</body>
+</html>

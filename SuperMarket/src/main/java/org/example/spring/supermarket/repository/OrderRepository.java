@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,4 +23,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT od FROM OrderDetails od WHERE od.order.id = :orderId")
     List<OrderDetails> findOrderDetailsByOrderId(@Param("orderId") int orderId);
 
+    List<Order> findByStatusNotIn(List<String> statuses);
+    int countByCustomer(Customer customer);
+    @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.customer = :customer AND o.status NOT IN ('Pending', 'Cancelled')")
+    BigDecimal calculateTotalSpentByCustomer(@Param("customer") Customer customer);
 }

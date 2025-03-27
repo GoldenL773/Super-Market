@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -24,11 +25,12 @@ public class OrderServiceImpl implements OrderService {
     private final ProductService productService;
     private final ProductRepository productRepository;
     private InventoryService inventoryService;
+
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository,
                             OrderDetailRepository orderDetailRepository,
                             ProductService productService,
-                            ProductRepository productRepository,InventoryService inventoryService) {
+                            ProductRepository productRepository, InventoryService inventoryService) {
         this.orderRepository = orderRepository;
         this.orderDetailRepository = orderDetailRepository;
         this.productService = productService;
@@ -96,8 +98,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
-
     @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDetails> getOrderDetails(int orderId) {
-       return orderRepository.findOrderDetailsByOrderId(orderId);
+        return orderRepository.findOrderDetailsByOrderId(orderId);
     }
 
     @Override
@@ -123,5 +123,27 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(status);
         orderRepository.save(order);
     }
+    public Map<String, BigDecimal> getMonthlyIncome() {
+        List<Order> validOrders = orderRepository.findByStatusNotIn(List.of("Pending", "Cancelled"));
+        Map<String, BigDecimal> incomeByMonth = new TreeMap<>();
+
+        for (Order order : validOrders) {
+            String month = new SimpleDateFormat("yyyy-MM").format(order.getCreatedAt());
+            incomeByMonth.put(month, incomeByMonth.getOrDefault(month, BigDecimal.ZERO).add(order.getTotalAmount()));
+        }
+
+        return incomeByMonth;
+    }
+
+    // Trong OrderService.java
+    public BigDecimal calculateTotalSpentByCustomer(Customer customer) {
+        return orderRepository.calculateTotalSpentByCustomer(customer);
+    }
+
+    @Override
+    public int countByCustomer(Optional<Customer> customer) {
+        return customer.map(orderRepository::countByCustomer).orElse(0);
+    }
+
 
 }

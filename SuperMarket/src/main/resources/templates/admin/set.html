@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Settings</title>
+    <base href="/admin/"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="main-wrapper">
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div class="content-body">
+        <div class="container-fluid mt-4">
+            <h2>Chỉnh sửa thông tin</h2>
+            <div th:if="${param.success}">
+                <div class="alert alert-success">Staff information updated successfully!</div>
+            </div>
+            <div class="card p-4 col-md-6">
+                <form th:action="@{/admin/setting}" method="post" th:object="${staff}">
+                    <div class="form-group">
+                        <label for="fullName">Họ và tên</label>
+                        <input type="text" id="fullName" th:field="*{fullName}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" th:field="*{email}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Số điện thoại</label>
+                        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" id="address" th:field="*{address}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Tên đăng nhập</label>
+                        <input type="text" id="username" th:field="*{username}" class="form-control" required>
+                    </div>
+                    <div class="form-group mt-3 text-right">
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                    </div>
+                </form>
+                <div th:if="${param.success}">
+                    <div class="alert alert-success mt-2">Cập nhật thành công!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="copyright">
+            <p>&copy; Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/gleek.js"></script>
+<script src="js/styleSwitcher.js"></script>
+<script src="js/dashboard/dashboard-2.js"></script>
+</body>
+</html>

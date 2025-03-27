@@ -135,15 +135,15 @@ public class HomeController {
         return "/quixlab-master/widgets";
     }
 
-    @GetMapping("/setting")
-    public String showSetting(Model model, HttpSession session) {
-        Customer customer = (Customer) session.getAttribute("customer");
-        Map<ProductDTO, Integer> cartItems = cartService.getCartItems(customer);
-        double total = cartService.getCartTotal(customer);
-        model.addAttribute("cartItems", cartItems);
-        model.addAttribute("total", total);
-        return "setting";
-    }
+//    @GetMapping("/setting")
+//    public String showSetting(Model model, HttpSession session) {
+//        Customer customer = (Customer) session.getAttribute("customer");
+//        Map<ProductDTO, Integer> cartItems = cartService.getCartItems(customer);
+//        double total = cartService.getCartTotal(customer);
+//        model.addAttribute("cartItems", cartItems);
+//        model.addAttribute("total", total);
+//        return "setting";
+//    }
 }
 
 

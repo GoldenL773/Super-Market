@@ -22,10 +22,14 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
         @Query("SELECT i.product.id, COALESCE(SUM(i.quantity), 0) FROM Inventory i GROUP BY i.product.id")
         List<Object[]> findAllProductQuantities();
-    
+
         @Query("SELECT i FROM Inventory i WHERE i.product.id = :productId")
         Optional<Inventory> findByProductId(@Param("productId") int productId);
 
         List<Inventory> findByProduct(Product product);
-//        Optional<Inventory> findByProductId(int productId);
+        //        Optional<Inventory> findByProductId(int productId);
+        @Modifying
+        @Transactional
+        @Query("DELETE FROM Inventory i WHERE i.product.id = :productId")
+        void deleteByProductId(@Param("productId") int productId);
 }

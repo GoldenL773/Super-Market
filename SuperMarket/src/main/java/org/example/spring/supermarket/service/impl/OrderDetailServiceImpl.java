@@ -1,6 +1,7 @@
 package org.example.spring.supermarket.service.impl;
 
 import org.example.spring.supermarket.DTO.ProductDTO;
+import org.example.spring.supermarket.entity.Customer;
 import org.example.spring.supermarket.entity.Order;
 import org.example.spring.supermarket.entity.OrderDetails;
 import org.example.spring.supermarket.repository.OrderDetailRepository;
@@ -43,5 +44,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             orderDetailsMap.put(productDTO, detail.getQuantity());
         }
         return orderDetailsMap;
+    }
+    public int countDistinctProductsByCustomer(Customer customer) {
+        return orderDetailRepository.countDistinctProductByCustomer(customer);
     }
 }

@@ -91,6 +91,15 @@
                                                 th:text="'VND. ' + ${total}">VND. 0</strong></span>
                                     </div>
                                 </li>
+                                <li class="nav-item" th:if="${session.customer == null}">
+                                    <a th:href="@{/register}" class="nav-link">Register</a>
+                                </li>
+                                <li class="nav-item" th:if="${session.customer == null}">
+                                    <a th:href="@{/login}" class="nav-link">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a th:href="@{/logout}" class="nav-link">Logout</a>
+                                </li>
                                 <li class="d-flex justify-content-between pl-3 pr-3 pt-3">
                                     <a th:href="@{/cart}" class="btn btn-default">View Cart</a>
                                     <a th:href="@{/cart/checkout}" class="btn btn-primary">Checkout</a>

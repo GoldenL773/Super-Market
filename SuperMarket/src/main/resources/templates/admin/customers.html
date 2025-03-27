@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer List</title>
+  <base href="/admin/"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="main-wrapper">
+  <div th:replace="fragments/header :: header"></div>
+  <div th:replace="fragments/sidebar :: sidebar"></div>
+
+  <div class="content-body">
+    <div class="container-fluid mt-4">
+      <h2>Danh sách khách hàng</h2>
+
+      <div class="card p-4">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+          <tr>
+            <th>STT</th>
+            <th>Họ và tên</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="customer, iterStat : ${customers}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${customer.fullName}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.phoneNumber}"></td>
+            <td th:text="${customer.address}"></td>
+            <td>
+              <a th:href="@{/admin/customers/{id}(id=${customer.customerId})}" class="btn btn-info">Xem</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="copyright">
+      <p>&copy; Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="plugins/common/common.min.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/gleek.js"></script>
+<script src="js/styleSwitcher.js"></script>
+</body>
+</html>

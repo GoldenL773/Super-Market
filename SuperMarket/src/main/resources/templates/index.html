@@ -115,6 +115,10 @@
                         <li class="nav-item" th:if="${session.customer == null}">
                             <a th:href="@{/login}" class="nav-link">Login</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a th:href="@{/logout}" class="nav-link">Logout</a>
+                        </li>
                         <li class="nav-item dropdown" th:if="${session.customer != null}">
                             <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

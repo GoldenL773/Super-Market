@@ -63,28 +63,7 @@
 }
 
 /* Base styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
-html {
-    font-size: 16px;
-    height: 100%;
-}
-
-body {
-    font-family: var(--font-body);
-    background-color: var(--color-gray-100);
-    color: var(--color-gray-800);
-    line-height: 1.6;
-    min-height: 100%;
-    background-image:
-            radial-gradient(at 0% 0%, rgba(var(--color-primary-rgb), 0.03) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(var(--color-secondary-rgb), 0.03) 0px, transparent 50%);
-    padding: var(--spacing-md);
-}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);

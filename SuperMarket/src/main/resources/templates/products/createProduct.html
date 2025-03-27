@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <base href="/admin/" />
+    <base href="/admin/"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -85,14 +85,6 @@
 
 <body>
 
-<div id="preloader">
-    <div class="loader">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
-        </svg>
-    </div>
-</div>
-
 <div id="main-wrapper">
 
     <div class="nav-header">
@@ -107,61 +99,86 @@
         </div>
     </div>
 
+    <div class="header">
+        <div class="header-content clearfix">
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="toggle-icon"><i class="icon-menu"></i></span>
+                </div>
+            </div>
+            <div class="header-left">
+                <div class="input-group icons">
+
+
+                </div>
+            </div>
+            <div class="header-right">
+                <ul class="clearfix">
+
+
+                    <li class="icons dropdown">
+                        <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                            <span class="activity active"></span>
+                            <img src="images/user/1.png" height="40" width="40" alt="">
+                        </div>
+                        <div class="drop-down dropdown-profile   dropdown-menu">
+                            <div class="dropdown-content-body">
+                                <ul>
+                                    <li>
+                                        <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span>
+                                            <div class="badge gradient-3 badge-pill badge-primary">3</div>
+                                        </a>
+                                    </li>
+
+                                    <hr class="my-2">
+                                    <li>
+                                        <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
+                                    </li>
+                                    <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="nk-sidebar">
         <div class="nk-nav-scroll">
             <ul class="metismenu" id="menu">
-                <li class="nav-label">Dashboard</li>
                 <li>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+
+                    <a href="/dashboard" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">dashboard</span>
                     </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./index.html">Home 1</a></li>
-                        <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                    </ul>
                 </li>
 
-                <li class="nav-label">Apps</li>
+                <li class="nav-label">Features</li>
 
                 <li>
 
                     <a href="/products/list" aria-expanded="false">
                         <i class="icon-badge menu-icon"></i><span class="nav-text">Quản lý sản phẩm</span>
                     </a>
-
-                <li class="nav-label">Pages</li>
-                <li>
-                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="./page-login.html">Login</a></li>
-                        <li><a href="./page-register.html">Register</a></li>
-                        <li><a href="./page-lock.html">Lock Screen</a></li>
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                            <ul aria-expanded="false">
-                                <li><a href="./page-error-404.html">Error 404</a></li>
-                                <li><a href="./page-error-403.html">Error 403</a></li>
-                                <li><a href="./page-error-400.html">Error 400</a></li>
-                                <li><a href="./page-error-500.html">Error 500</a></li>
-                                <li><a href="./page-error-503.html">Error 503</a></li>
-                            </ul>
-                        </li>
-                    </ul>
                 </li>
+                <li>
+
+                    <a href="/admin/orders" aria-expanded="false">
+                        <i class="icon-badge menu-icon"></i><span class="nav-text">Xử Lí Đơn Hàng</span>
+                    </a>
+
+                </li>
+
             </ul>
         </div>
     </div>
     <div class="content-body">
 
-        <div class="row page-titles mx-0">
-            <div class="col p-md-0">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-                </ol>
-            </div>
-        </div>
         <!-- row -->
 
         <div class="container-fluid mt-4">
@@ -170,12 +187,12 @@
 
                 <!-- Tên sản phẩm -->
                 <label for="name">Tên sản phẩm:</label>
-                <input type="text" id="name" name="name" th:field="*{name}" required />
+                <input type="text" id="name" name="name" th:field="*{name}" required/>
                 <!--        <span class="error" th:if="${#fields.hasErrors('productName')}" th:errors="*{name}"></span>-->
 
                 <!-- Giá -->
                 <label for="price">Giá:</label>
-                <input type="number" id="price" name="price" th:field="*{price}" step="0.01" required />
+                <input type="number" id="price" name="price" th:field="*{price}" step="0.01" required/>
                 <!--        <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>-->
 
                 <!-- Mô tả sản phẩm -->
@@ -198,12 +215,13 @@
 
                 <!-- Số lượng trong kho -->
                 <label for="quantity">Số lượng trong kho:</label>
-                <input type="number" id="quantity" name="quantity" th:field="*{quantity}" required />
+                <input type="number" id="quantity" name="quantity" th:field="*{quantity}" required/>
                 <!--        <span class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>-->
 
                 <!-- Giá nhập hàng -->
                 <label for="purchasePrice">Giá nhập hàng:</label>
-                <input type="number" id="purchasePrice" name="purchasePrice" th:field="*{purchasePrice}" step="0.01" required />
+                <input type="number" id="purchasePrice" name="purchasePrice" th:field="*{purchasePrice}" step="0.01"
+                       required/>
                 <span class="error" th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
 
                 <!-- Ngày nhập hàng -->
@@ -221,7 +239,8 @@
 
     <div class="footer">
         <div class="copyright">
-            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018
+            </p>
         </div>
     </div>
 </div>
@@ -237,13 +256,11 @@
 
         $('#list-items').html(localStorage.getItem('listItems'));
 
-        $('.add-items').submit(function(event)
-        {
+        $('.add-items').submit(function (event) {
             event.preventDefault();
 
             var item = $('#todo-list-item').val();
-            if(item)
-            {
+            if (item) {
                 $('#list-items').append("<li><div class='round d-inline-block'><input type='checkbox' id='checkbox' /><label for='checkbox'></label></div><label for='checkbox'>" + item + "</label><a class='remove'><i class='fa fa-trash'></i></a></li>");
 
                 localStorage.setItem('listItems', $('#list-items').html());
@@ -253,14 +270,10 @@
 
         });
 
-        $(document).on('change', '.checkbox', function()
-        {
-            if($(this).attr('checked'))
-            {
+        $(document).on('change', '.checkbox', function () {
+            if ($(this).attr('checked')) {
                 $(this).removeAttr('checked');
-            }
-            else
-            {
+            } else {
                 $(this).attr('checked', 'checked');
             }
 
@@ -269,8 +282,7 @@
             localStorage.setItem('listItems', $('#list-items').html());
         });
 
-        $(document).on('click', '.remove', function()
-        {
+        $(document).on('click', '.remove', function () {
             $(this).parent().remove();
 
             localStorage.setItem('listItems', $('#list-items').html());

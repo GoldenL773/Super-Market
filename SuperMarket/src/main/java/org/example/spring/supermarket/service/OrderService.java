@@ -5,7 +5,9 @@ import org.example.spring.supermarket.entity.Order;
 import org.example.spring.supermarket.entity.OrderDetails;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -21,5 +23,9 @@ public interface OrderService {
 
     List<OrderDetails> getOrderDetails(int orderId);
 
+    public Map<String, BigDecimal> getMonthlyIncome();
+    public BigDecimal calculateTotalSpentByCustomer(Customer customer);
 
+
+    int countByCustomer(Optional<Customer> customer);
 }
