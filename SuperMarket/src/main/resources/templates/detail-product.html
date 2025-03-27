@@ -92,14 +92,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    <div th:if="${product.image != null and !product.image.isEmpty()}">
-                        <a th:href="${product.image}" class="cloud-zoom"
+                    <div th:if="${product.imageUrl != null and !product.imageUrl.isEmpty()}">
+                        <a th:href="${product.imageUrl}" class="cloud-zoom"
                            rel="transparentImage: 'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', useWrapper: false, showTitle: false, zoomWidth:'500', zoomHeight:'500', adjustY:0, adjustX:10"
                            id="cloudZoom">
-                            <img alt="Detail Zoom thumbs image" th:src="${product.image}" style="width: 100%;">
+                            <img alt="Detail Zoom thumbs image" th:src="${product.imageUrl}" style="width: 100%;">
                         </a>
                     </div>
-                    <div th:unless="${product.image != null and !product.image.isEmpty()}">
+                    <div th:unless="${product.imageUrl != null and !product.imageUrl.isEmpty()}">
                         <a href="/assets/img/vegetables.jpg" class="cloud-zoom"
                            rel="transparentImage: 'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', useWrapper: false, showTitle: false, zoomWidth:'500', zoomHeight:'500', adjustY:0, adjustX:10"
                         >
@@ -108,6 +108,10 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
+                    <h2>
+                        <strong>Product's name:</strong><br>
+                        <span th:text="*{name}"></span>
+                    </h2>
                     <p>
                         <strong>Overview</strong><br>
                         <span th:text="*{description}"></span>

@@ -22,6 +22,8 @@ public class ProductDTO {
     @NotEmpty(message = "Product name must not be empty")
     private String name;
 
+    private String imageUrl;
+
     @NotNull(message = "Price must not be null")
     @DecimalMin(value = "0.1", message = "Price must be greater than 0")
     private BigDecimal price;

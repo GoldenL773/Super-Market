@@ -130,7 +130,7 @@
                             <tbody>
                             <tr th:each="entry : ${cartItems}">
                                 <td>
-                                    <img th:src="${entry.key.image ?: '/assets/img/logo/avatar.jpg'}" width="60" alt="Product Image">
+                                    <img th:src="${entry.key.imageUrl ?: '/assets/img/logo/avatar.jpg'}" width="60" alt="Product Image">
                                 </td>
                                 <td>
                                     <span th:text="${entry.key.name}">Product Name</span><br>

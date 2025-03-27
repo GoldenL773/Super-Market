@@ -4,8 +4,8 @@
     <title>Orders List</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/assets/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/order.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,6 @@
 <div class="container">
     <header class="page-header">
         <h1>Orders List</h1>
-
     </header>
 
     <div class="orders-list-card">
@@ -36,8 +35,8 @@
                     <td th:text="${order?.customer?.fullName ?: 'John Doe'}">John Doe</td>
                     <td class="price" th:text="${order?.totalAmount ?: '$129.99'}">$129.99</td>
                     <td>
-                                <span th:class="${'status-badge ' + (order?.status?.toLowerCase() ?: 'completed')}"
-                                      th:text="${order?.status ?: 'Completed'}">Completed</span>
+                        <span th:class="${'status-badge ' + (order?.status?.toLowerCase() ?: 'completed')}"
+                              th:text="${order?.status ?: 'Completed'}">Completed</span>
                     </td>
                     <td class="actions-cell">
                         <a th:href="@{/admin/orders/{id}(id=${order?.id ?: '12345'})}" class="action-link view-link">

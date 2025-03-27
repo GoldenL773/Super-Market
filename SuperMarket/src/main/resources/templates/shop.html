@@ -364,8 +364,9 @@
                                     <div class="col-md-6 col-lg-6 col-xl-4" th:each="product : ${products}">
                                         <div class="rounded position-relative">
                                             <div class="fruite-img">
-                                                <img th:src="${product.image}" class="img-fluid w-100 rounded-top"
-                                                     alt="">
+                                                <img th:src="${product.imageUrl}" class="img-fluid w-100 rounded-top"
+                                                     style="width: 100px; height: 250px;"
+                                                     alt="img">
                                             </div>
                                             <div th:if="${product.categoryId ==1}"
                                                  class="text-white bg-secondary px-3 py-1 rounded position-absolute"

@@ -133,7 +133,6 @@ public class ProductServiceImpl implements ProductService {
         return new PageImpl<>(sublist.stream().map(this::convertToDTO).collect(Collectors.toList()), pageable, products.size());
     }
 
-    // File: `src/main/java/org/example/spring/supermarket/service/impl/ProductServiceImpl.java`
     private ProductDTO convertToDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
@@ -141,25 +140,8 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setPrice(product.getPrice());
 
-        // Check if the image path is non-null and non-empty before processing.
-        if (product.getImage() != null && !product.getImage().isEmpty()) {
-            try {
-                File file = new File(product.getImage());
-                if (file.exists() && file.isFile()) {
-                    FileInputStream inputStream = new FileInputStream(file);
-                    MultipartFile multipartFile = new MockMultipartFile(file.getName(), inputStream);
-                    productDTO.setImage(multipartFile);
-                } else {
-                    // File does not exist, handle accordingly.
-                    productDTO.setImage(null);
-                }
-            } catch (IOException e) {
-                // Handle error accordingly; here we set the image to null if conversion fails.
-                productDTO.setImage(null);
-            }
-        } else {
-            productDTO.setImage(null);
-        }
+        // Chỉ cần set đường dẫn ảnh (không cần chuyển sang MultipartFile)
+        productDTO.setImageUrl(product.getImage());
 
         productDTO.setCategoryId(product.getCategory().getId());
         return productDTO;
